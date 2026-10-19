@@ -14,7 +14,7 @@ window.WEDDING_CONFIG = {
 
   // Informasi Mempelai Wanita
   bride: {
-    fullName: "Siti Padillah",
+    fullName: "Siti Padilah",
     shortName: "Dilah",
     daughterOf: "Putri pertama dari",
     father: "Bapak Japar",
@@ -148,7 +148,7 @@ window.WEDDING_CONFIG = {
         shortName: "DANA",
         accountNumber: "085811589346",
         displayNumber: "+62 858-1158-9346",
-        holderName: "Siti Padillah",
+        holderName: "Siti Padilah",
         logo: "./assets/images/logo-dana.png",
         badge: "Mempelai Wanita"
       }
