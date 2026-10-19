@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Manajemen Undangan - Dilah & Fadil</title>
+  <link rel="icon" type="image/png" href="./assets/images/floral_border.png">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./assets/css/iziToast.css">
+  <link rel="stylesheet" href="./assets/css/local-fonts.css">
+  <link rel="stylesheet" href="./assets/css/garden-watercolor.css">
+
+  <style>
+    :root {
+      --admin-sage: #4a6b5d;
+      --admin-sage-dark: #385246;
+      --admin-sage-light: #f0f5f2;
+      --admin-sage-border: rgba(74, 107, 93, 0.18);
+      --admin-gold: #c5a880;
+      --admin-cream: #faf8f5;
+      --admin-card-bg: #ffffff;
+      --admin-text: #2f3e37;
+      --admin-muted: #6c757d;
+    }
+
+    body {
+      background-color: var(--admin-cream);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(200, 216, 206, 0.3) 0px, transparent 55%),
+        radial-gradient(at 100% 100%, rgba(230, 218, 202, 0.3) 0px, transparent 55%);
+      background-attachment: fixed;
+      font-family: 'Nunito Sans', sans-serif;
+      color: var(--admin-text);
+      min-height: 100vh;
+    }
+
+    /* Admin Navigation Bar */
+    .admin-navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--admin-sage-border);
+      box-shadow: 0 4px 20px rgba(74, 107, 93, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .admin-brand-script {
+      font-family: 'Brittany Signature', cursive;
+      font-size: 2.1rem;
+      color: var(--admin-sage);
+      line-height: 1;
+    }
+    .admin-brand-serif {
+      font-family: 'Prata', serif;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      color: #2b3b33;
+      text-transform: uppercase;
+    }
+
+    /* Cards */
+    .admin-card {
+      background: var(--admin-card-bg);
+      border: 1px solid var(--admin-sage-border);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(74, 107, 93, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .admin-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--admin-sage), var(--admin-gold));
+      opacity: 0.85;
+    }
+
+    /* Stat Cards */
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid var(--admin-sage-border);
+      border-radius: 16px;
+      padding: 1.25rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 4px 15px rgba(74, 107, 93, 0.04);
+      transition: transform 0.2s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+    }
+    .stat-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .stat-icon-primary { background: #e0ece4; color: #2e5944; }
+    .stat-icon-success { background: #dcfce7; color: #15803d; }
+    .stat-icon-warning { background: #fef3c7; color: #b45309; }
+    .stat-icon-gold    { background: #fdf2e9; color: #9a3412; }
+
+    .stat-value {
+      font-family: 'Prata', serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #2b3b33;
+      line-height: 1.1;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--admin-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Buttons */
+    .btn-sage {
+      background-color: var(--admin-sage);
+      border-color: var(--admin-sage);
+      color: #ffffff;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 0.55rem 1.25rem;
+      transition: all 0.2s ease;
+    }
+    .btn-sage:hover, .btn-sage:focus {
+      background-color: var(--admin-sage-dark);
+      border-color: var(--admin-sage-dark);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(74, 107, 93, 0.25);
+    }
+    .btn-outline-sage {
+      border: 1px solid var(--admin-sage);
+      color: var(--admin-sage);
+      font-weight: 600;
+      border-radius: 10px;
+      background: transparent;
+      transition: all 0.2s ease;
+    }
+    .btn-outline-sage:hover {
+      background-color: var(--admin-sage);
+      color: #ffffff;
+    }
+
+    /* Custom Form Controls */
+    .form-control, .form-select {
+      border: 1px solid rgba(74, 107, 93, 0.25);
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.95rem;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--admin-sage);
+      box-shadow: 0 0 0 0.2rem rgba(74, 107, 93, 0.15);
+    }
+
+    /* Table Styles */
+    .admin-table {
+      margin-bottom: 0;
+    }
+    .admin-table thead th {
+      background: #f4f7f5;
+      color: #3b4e44;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      border-bottom: 2px solid var(--admin-sage-border);
+      padding: 0.85rem 0.75rem;
+    }
+    .admin-table tbody td {
+      padding: 0.9rem 0.75rem;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(74, 107, 93, 0.08);
+      font-size: 0.92rem;
+    }
+    .admin-table tbody tr:hover {
+      background-color: rgba(74, 107, 93, 0.03);
+    }
+
+    /* Action Icon Buttons */
+    .btn-action-icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      transition: all 0.2s ease;
+    }
+
+    /* Interactive Status Badge */
+    .btn-status-toggle {
+      border: none;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .status-shared {
+      background-color: #d1e7dd;
+      color: #0f5132;
+    }
+    .status-shared:hover {
+      background-color: #badbcc;
+      color: #0f5132;
+    }
+    .status-unshared {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+    .status-unshared:hover {
+      background-color: #ffeeba;
+      color: #856404;
+    }
+
+    /* Result Box */
+    .result-box {
+      background: #f7faf8;
+      border: 1px dashed var(--admin-sage);
+      border-radius: 14px;
+      padding: 1.25rem;
+    }
+
+    /* Guest Mobile Card */
+    .guest-mobile-card {
+      background: #ffffff;
+      border: 1px solid var(--admin-sage-border) !important;
+      border-radius: 14px;
+      padding: 1rem;
+      box-shadow: 0 4px 15px rgba(74, 107, 93, 0.05);
+      transition: all 0.2s ease;
+    }
+    .guest-mobile-card:hover {
+      box-shadow: 0 6px 18px rgba(74, 107, 93, 0.1) !important;
+    }
+
+    /* Font Awesome 4 to 6 Compatibility Aliases & Font-Family Enforcement */
+    .fa, .fas, .fa-solid { font-family: "Font Awesome 6 Free" !important; font-weight: 900 !important; }
+    .far, .fa-regular { font-family: "Font Awesome 6 Free" !important; font-weight: 400 !important; }
+    .fab, .fa-brands { font-family: "Font Awesome 6 Brands" !important; font-weight: 400 !important; }
+    .fa-whatsapp { font-family: "Font Awesome 6 Brands" !important; font-weight: 400 !important; }
+    .fa-calendar-check-o:before { content: "\f274" !important; }
+    .fa-clock-o:before { content: "\f017" !important; }
+    .fa-commenting-o:before { content: "\f075" !important; }
+    .fa-comments-o:before { content: "\f086" !important; }
+    .fa-check-circle:before { content: "\f058" !important; }
+
+    /* Nav Tabs */
+    .admin-nav-tabs .nav-link {
+      color: #555;
+      font-weight: 600;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0;
+      transition: all 0.2s ease;
+    }
+    .admin-nav-tabs .nav-link.active {
+      color: var(--admin-sage);
+      border-bottom: 2px solid var(--admin-sage);
+      background: transparent;
+    }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 768px) {
+      .admin-navbar {
+        position: relative; /* Prevent sticky header from consuming 25% of mobile screen */
+        padding: 0.6rem 0;
+      }
+      .admin-brand-script {
+        font-size: 1.6rem;
+      }
+      .admin-brand-serif {
+        font-size: 0.85rem;
+      }
+      .stat-card {
+        padding: 0.75rem 0.6rem;
+        gap: 0.6rem;
+        border-radius: 12px;
+      }
+      .stat-icon-wrap {
+        width: 40px;
+        height: 40px;
+        font-size: 1.15rem;
+        border-radius: 10px;
+      }
+      .stat-value {
+        font-size: 1.45rem;
+      }
+      .stat-label {
+        font-size: 0.68rem;
+        letter-spacing: 0;
+      }
+      .admin-card {
+        border-radius: 14px;
+        padding: 1.25rem 1rem !important;
+      }
+      #adminTabs {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 6px;
+        border-bottom: 2px solid var(--admin-sage-border);
+        padding-bottom: 6px;
+        margin-bottom: 1rem !important;
+        scrollbar-width: none;
+      }
+      #adminTabs::-webkit-scrollbar {
+        display: none;
+      }
+      #adminTabs .nav-item {
+        flex-shrink: 0;
+      }
+      #adminTabs .nav-link {
+        white-space: nowrap;
+        border: 1px solid var(--admin-sage-border);
+        border-radius: 20px;
+        padding: 0.4rem 0.85rem;
+        font-size: 0.8rem;
+        background: #f4f7f5;
+        color: #3b4e44;
+      }
+      #adminTabs .nav-link.active {
+        background: var(--admin-sage);
+        color: #ffffff !important;
+        border-color: var(--admin-sage);
+        box-shadow: 0 2px 8px rgba(74, 107, 93, 0.25);
+      }
+      .admin-table {
+        min-width: 580px;
+      }
+      .table-responsive {
+        border-radius: 10px;
+        border: 1px solid rgba(74, 107, 93, 0.12);
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="admin-navbar py-2 mb-3 mb-md-4">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div class="d-flex align-items-center gap-2 gap-sm-3">
+        <a href="/" class="text-decoration-none">
+          <span class="admin-brand-script">Dilah &amp; Fadil</span>
+        </a>
+        <div class="vr d-none d-sm-block text-secondary opacity-25"></div>
+        <div>
+          <div class="admin-brand-serif">Panel Manajemen Tamu</div>
+          <small class="text-muted d-none d-sm-block"><i class="fa-solid fa-calendar-check text-sage me-1"></i> Minggu, 1 November 2026 • Ciomas, Bogor</small>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <a href="/" target="_blank" class="btn btn-outline-sage btn-sm px-2 px-sm-3">
+          <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> <span class="d-none d-sm-inline">Buka Website Undangan</span><span class="d-inline d-sm-none">Buka Web</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container mb-5">
+    
+    <!-- Top Stat Counter Cards (4 Columns) -->
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-lg-3">
+        <div class="stat-card">
+          <div class="stat-icon-wrap stat-icon-primary">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div>
+            <div class="stat-value" id="stat-total">0</div>
+            <div class="stat-label">Total Tamu</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="stat-card">
+          <div class="stat-icon-wrap stat-icon-success">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <div>
+            <div class="stat-value" id="stat-shared">0</div>
+            <div class="stat-label">Sudah Dibagikan</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="stat-card">
+          <div class="stat-icon-wrap stat-icon-warning">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <div>
+            <div class="stat-value" id="stat-unshared">0</div>
+            <div class="stat-label">Belum Dibagikan</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="stat-card">
+          <div class="stat-icon-wrap stat-icon-gold">
+            <i class="fa-solid fa-envelope-open-text"></i>
+          </div>
+          <div>
+            <div class="stat-value" id="stat-wishes">0</div>
+            <div class="stat-label">Ucapan &amp; RSVP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Workspace (Grid 5 / 7) -->
+    <div class="row g-4">
+      
+      <!-- Left Column: Generator Form & Result Preview -->
+      <div class="col-lg-5">
+        <div class="admin-card p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0 text-sage" style="font-family: 'Prata', serif;">
+              <i class="fa-solid fa-user-plus me-2"></i> Buat Link Tamu Baru
+            </h5>
+            <span class="badge bg-light text-secondary border">Personal Link</span>
+          </div>
+          
+          <form id="form-create-guest">
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-dark">Nama Tamu Undangan <span class="text-danger">*</span></label>
+              <input type="text" id="guest-name" class="form-control" placeholder="Contoh: Budi Santoso &amp; Keluarga" required autofocus>
+              <div class="form-text small text-muted">
+                Nama ini otomatis tercantum di Cover <em>"Undangan Untuk:"</em>, Hero, dan Form Ucapan.
+              </div>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-sm-6">
+                <label class="form-label small fw-bold text-dark">Sapaan / Sebutan</label>
+                <select id="guest-salutation" class="form-select">
+                  <option value="Bapak/Ibu/Saudara/i" selected>Bapak/Ibu/Saudara/i</option>
+                  <option value="Bapak">Bapak</option>
+                  <option value="Ibu">Ibu</option>
+                  <option value="Saudara/i">Saudara/i</option>
+                  <option value="Sahabat">Sahabat</option>
+                  <option value="Keluarga Besar">Keluarga Besar</option>
+                  <option value="Rekan Kerja">Rekan Kerja</option>
+                  <option value="Teman-teman">Teman-teman</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label small fw-bold text-dark">Nomor WhatsApp Tamu <small class="text-muted">(Opsional)</small></label>
+                <input type="tel" id="guest-phone" class="form-control" placeholder="Contoh: 08123456789">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-sage w-100 py-2">
+              <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Generate &amp; Salin Link
+            </button>
+          </form>
+
+          <!-- Generated Result Preview -->
+          <div id="result-container" class="result-box mt-4 d-none">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="badge bg-success"><i class="fa-solid fa-circle-check me-1"></i> Link Siap Dibagikan</span>
+              <small class="text-muted" id="res-timestamp">Baru saja dibuat</small>
+            </div>
+            
+            <h6 class="fw-bold mb-1 text-dark" id="res-name">Nama Tamu</h6>
+            
+            <!-- Link Field -->
+            <div class="input-group my-2">
+              <input type="text" id="res-link" class="form-control form-control-sm bg-white" readonly>
+              <button class="btn btn-outline-secondary btn-sm" id="btn-copy-link" type="button" title="Salin Link">
+                <i class="fa-solid fa-copy"></i> Salin
+              </button>
+              <a href="#" target="_blank" id="btn-preview-link" class="btn btn-sage btn-sm" title="Buka Undangan">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka
+              </a>
+            </div>
+
+            <!-- WhatsApp Message Preview -->
+            <div class="mt-3">
+              <label class="form-label small fw-bold text-muted mb-1">Format Pesan WhatsApp Resmi:</label>
+              <textarea id="res-wa-text" class="form-control form-control-sm bg-white" rows="5" readonly></textarea>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mt-3">
+              <button id="btn-copy-wa" class="btn btn-outline-sage btn-sm flex-fill">
+                <i class="fa-solid fa-clipboard me-1"></i> Salin Pesan WA
+              </button>
+              <a id="btn-send-wa" href="#" target="_blank" class="btn btn-success btn-sm flex-fill">
+                <i class="fa-brands fa-whatsapp me-1"></i> Kirim WhatsApp
+              </a>
+              <button id="btn-mark-result-shared" class="btn btn-outline-secondary btn-sm">
+                <i class="fa-solid fa-check me-1"></i> Tandai Sudah Dikirim
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right Column: Tabs (Daftar Tamu, Buku Tamu / RSVP, Info Acara) -->
+      <div class="col-lg-7">
+        <div class="admin-card p-4">
+          
+          <!-- Nav Tabs Header -->
+          <ul class="nav admin-nav-tabs mb-4" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="tab-guests" data-bs-toggle="tab" data-bs-target="#content-guests" type="button" role="tab">
+                <i class="fa-solid fa-address-book me-1"></i> Daftar Tamu (<span id="tab-guest-count">0</span>)
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="tab-wishes" data-bs-toggle="tab" data-bs-target="#content-wishes" type="button" role="tab">
+                <i class="fa-solid fa-comments me-1"></i> Buku Tamu &amp; RSVP (<span id="tab-wishes-count">0</span>)
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            
+            <!-- TAB 1: DAFTAR TAMU -->
+            <div class="tab-pane fade show active" id="content-guests" role="tabpanel">
+              
+              <!-- Filter & Actions Bar -->
+              <div class="row g-2 align-items-center mb-3">
+                <div class="col-sm-5">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                    <input type="text" id="search-input" class="form-control" placeholder="Cari nama tamu...">
+                  </div>
+                </div>
+                <div class="col-sm-3 col-6">
+                  <select id="filter-status" class="form-select form-select-sm">
+                    <option value="all">Semua Status</option>
+                    <option value="unshared">Belum Dibagikan</option>
+                    <option value="shared">Sudah Dibagikan</option>
+                  </select>
+                </div>
+                <div class="col-sm-4 col-6 text-end d-flex gap-1 justify-content-end">
+                  <button id="btn-export-csv" class="btn btn-outline-success btn-sm" title="Ekspor daftar tamu ke file CSV / Excel">
+                    <i class="fa-solid fa-file-excel me-1"></i> Ekspor CSV
+                  </button>
+                  <button id="btn-clear-all" class="btn btn-outline-danger btn-sm" title="Hapus Semua Tamu">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Desktop Table View -->
+              <div class="table-responsive d-none d-md-block" style="max-height: 520px; overflow-y: auto;">
+                <table class="table admin-table align-middle">
+                  <thead>
+                    <tr>
+                      <th style="width: 5%;">No</th>
+                      <th>Nama &amp; Sapaan</th>
+                      <th style="text-align: center;">Status</th>
+                      <th style="text-align: right; width: 140px;">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="guest-table-body">
+                    <!-- Dynamic Guest Rows -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Mobile Responsive Card View -->
+              <div class="d-md-none d-flex flex-column gap-3 mb-2" id="guest-cards-container" style="max-height: 520px; overflow-y: auto;">
+                <!-- Dynamic Guest Cards for Mobile -->
+              </div>
+
+              <div id="empty-state" class="text-center py-5 text-muted d-none">
+                <i class="fa-solid fa-users fa-3x mb-2 text-black-50"></i>
+                <h6>Tidak ada data tamu ditemukan</h6>
+                <p class="small">Gunakan form di samping untuk membuat link tamu baru atau ubah kata kunci pencarian Anda.</p>
+              </div>
+
+            </div>
+
+            <!-- TAB 2: BUKU TAMU & RSVP MASUK -->
+            <div class="tab-pane fade" id="content-wishes" role="tabpanel">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="fw-bold mb-0 text-sage"><i class="fa-solid fa-comments me-2"></i> Doa Restu &amp; Konfirmasi Kehadiran Tamu</h6>
+                <div class="d-flex gap-2">
+                  <button id="btn-refresh-wishes" class="btn btn-outline-secondary btn-sm" title="Segarkan data ucapan">
+                    <i class="fa-solid fa-rotate-right me-1"></i> Perbarui
+                  </button>
+                  <button id="btn-clear-wishes" class="btn btn-outline-danger btn-sm" title="Hapus semua ucapan yang masuk">
+                    <i class="fa-solid fa-trash-can me-1"></i> Hapus Semua
+                  </button>
+                </div>
+              </div>
+
+              <div id="wishes-admin-list" class="d-flex flex-column gap-2" style="max-height: 520px; overflow-y: auto;">
+                <!-- Dynamic wishes list -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./assets/js/jquery-3.6.0.min.js"></script>
+  <script src="./assets/js/bootstrap.bundle.min.js"></script>
+  <script src="./assets/js/iziToast.min.js"></script>
+  <script src="./assets/js/wedding-config.js"></script>
+  <!-- Firebase Cloud Firestore SDK & Sync Service -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="./assets/js/firebase-config.js"></script>
+  <script src="./assets/js/firebase-sync.js"></script>
+
+  <script>
+    (function() {
+      'use strict';
+
+      const STORAGE_KEY = 'fawedding_admin_guests';
+      let guests = [];
+      let currentGeneratedId = null;
+
+      function loadGuests() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            guests = JSON.parse(raw);
+          } else {
+            // Initial seed matching the physical invitation context
+            guests = [
+              {
+                id: '1',
+                name: 'KH. Ali Dimyati & Keluarga',
+                salutation: 'Bapak',
+                phone: '',
+                isShared: true,
+                createdAt: new Date(Date.now() - 86400000 * 2).toISOString()
+              },
+              {
+                id: '2',
+                name: 'Bpk. Rahmat Jebeng (Kades Sukaharja)',
+                salutation: 'Bapak',
+                phone: '',
+                isShared: false,
+                createdAt: new Date(Date.now() - 86400000).toISOString()
+              },
+              {
+                id: '3',
+                name: 'Keluarga Besar PT. Bestari Property',
+                salutation: 'Keluarga Besar',
+                phone: '',
+                isShared: false,
+                createdAt: new Date(Date.now() - 3600000 * 5).toISOString()
+              },
+              {
+                id: '4',
+                name: 'Ustadz Abdul Fatah',
+                salutation: 'Bapak',
+                phone: '',
+                isShared: false,
+                createdAt: new Date(Date.now() - 3600000 * 2).toISOString()
+              }
+            ];
+            saveGuests();
+          }
+        } catch(e) {
+          guests = [];
+        }
+      }
+
+      function saveGuests() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(guests));
+        } catch(e) {
+          console.error('Error saving guests:', e);
+        }
+      }
+
+      function getBaseUrl() {
+        return window.location.origin;
+      }
+
+      function makeGuestLink(name) {
+        return `${getBaseUrl()}/?to=${encodeURIComponent(name)}`;
+      }
+
+      function makeWaText(salutation, name) {
+        const link = makeGuestLink(name);
+        const config = window.WEDDING_CONFIG || {};
+        const brideShort = (config.couple && config.couple.shortBride) || 'Dilah';
+        const groomShort = (config.couple && config.couple.shortGroom) || 'Fadil';
+
+        return `Assalamu'alaikum Warahmatullahi Wabarakatuh\n\nKepada Yth. ${salutation}:\n*${name}*\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i sekalian untuk menghadiri hari bahagia pernikahan kami:\n\n*${brideShort} & ${groomShort}*\n(Siti Padillah & Fadilah)\n\n🗓 *Minggu, 1 November 2026*\n⏰ *Akad:* 09.00 WIB | *Resepsi:* 10.00 WIB - Selesai\n📍 *Lokasi:* Kediaman Mempelai Wanita, Kp. Cipayung Rt 02 / 05 Desa. Sukaharja, Kec. Ciomas Bogor\n\nUntuk informasi selengkapnya mengenai detail acara, panduan lokasi, serta konfirmasi kehadiran (RSVP), silakan buka tautan undangan digital berikut:\n${link}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir serta memberikan doa restu bagi kami berdua.\n\nAtas perhatian dan doa restunya, kami ucapkan terima kasih yang sebesar-besarnya.\nWassalamu'alaikum Warahmatullahi Wabarakatuh\n\nSalam hangat dari kami,\n*${brideShort} & ${groomShort}*`;
+      }
+
+      function escapeHtml(text) {
+        if (!text) return '';
+        return text.toString().replace(/[&<>"']/g, m => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        })[m]);
+      }
+
+      function copyText(str, msg = 'Tersalin ke clipboard!') {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(str).then(() => {
+            if (window.iziToast) {
+              iziToast.success({ title: 'Berhasil', message: msg, position: 'bottomRight' });
+            }
+          }).catch(() => fallbackCopy(str, msg));
+        } else {
+          fallbackCopy(str, msg);
+        }
+      }
+
+      function fallbackCopy(str, msg) {
+        const ta = document.createElement('textarea');
+        ta.value = str;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (window.iziToast) {
+          iziToast.success({ title: 'Berhasil', message: msg, position: 'bottomRight' });
+        }
+      }
+
+      function updateStats() {
+        const total = guests.length;
+        const shared = guests.filter(g => g.isShared).length;
+        const unshared = total - shared;
+
+        $('#stat-total').text(total);
+        $('#stat-shared').text(shared);
+        $('#stat-unshared').text(unshared);
+        $('#tab-guest-count').text(total);
+
+        try {
+          const wishes = JSON.parse(localStorage.getItem('fawedding_wishes_data') || '[]');
+          $('#stat-wishes').text(wishes.length);
+          $('#tab-wishes-count').text(wishes.length);
+        } catch(e) {}
+      }
+
+      function renderTable() {
+        const filterQuery = ($('#search-input').val() || '').trim().toLowerCase();
+        const statusFilter = $('#filter-status').val();
+
+        const $tbody = $('#guest-table-body');
+        const $cardsContainer = $('#guest-cards-container');
+        $tbody.empty();
+        $cardsContainer.empty();
+
+        const filtered = guests.filter(g => {
+          // Status filter
+          if (statusFilter === 'shared' && !g.isShared) return false;
+          if (statusFilter === 'unshared' && g.isShared) return false;
+
+          // Search query
+          if (!filterQuery) return true;
+          return g.name.toLowerCase().includes(filterQuery) ||
+                 (g.salutation && g.salutation.toLowerCase().includes(filterQuery));
+        });
+
+        if (filtered.length === 0) {
+          $('#empty-state').removeClass('d-none');
+        } else {
+          $('#empty-state').addClass('d-none');
+        }
+
+        filtered.forEach((g, index) => {
+          const link = makeGuestLink(g.name);
+          const waText = makeWaText(g.salutation || 'Bapak/Ibu/Saudara/i', g.name);
+          
+          let cleanPhone = (g.phone || '').replace(/\D/g, '');
+          if (cleanPhone.startsWith('0')) cleanPhone = '62' + cleanPhone.substring(1);
+          
+          const waUrl = cleanPhone 
+            ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(waText)}`
+            : `https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`;
+
+          const statusBtn = g.isShared
+            ? `<button class="btn-status-toggle status-shared btn-toggle-status" data-id="${g.id}" title="Klik untuk ubah ke Belum Dibagikan"><i class="fa-solid fa-circle-check"></i> Sudah Dibagikan</button>`
+            : `<button class="btn-status-toggle status-unshared btn-toggle-status" data-id="${g.id}" title="Klik untuk ubah ke Sudah Dibagikan"><i class="fa-solid fa-clock"></i> Belum Dibagikan</button>`;
+
+          // Desktop Row
+          const row = `
+            <tr>
+              <td class="text-muted small">${index + 1}</td>
+              <td>
+                <div class="fw-bold text-dark">${escapeHtml(g.name)}</div>
+                <small class="text-muted">${escapeHtml(g.salutation || 'Bapak/Ibu/Saudara/i')}${g.phone ? ' • <i class="fa-solid fa-phone"></i> ' + escapeHtml(g.phone) : ''}</small>
+              </td>
+              <td class="text-center">
+                ${statusBtn}
+              </td>
+              <td class="text-end">
+                <div class="btn-group btn-group-sm">
+                  <button class="btn btn-outline-secondary btn-copy-row-link" data-link="${escapeHtml(link)}" title="Salin Link Undangan">
+                    <i class="fa-solid fa-link"></i>
+                  </button>
+                  <button class="btn btn-outline-success btn-copy-row-wa" data-text="${escapeHtml(waText)}" data-id="${g.id}" title="Salin Teks WhatsApp">
+                    <i class="fa-solid fa-clipboard"></i>
+                  </button>
+                  <a href="${waUrl}" target="_blank" class="btn btn-outline-success btn-send-row-wa" data-id="${g.id}" title="Kirim via WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                  </a>
+                  <a href="${link}" target="_blank" class="btn btn-outline-primary" title="Buka Pratinjau Undangan">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                  <button class="btn btn-outline-danger btn-delete-row" data-id="${g.id}" title="Hapus Tamu">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+          $tbody.append(row);
+
+          // Mobile Card
+          const card = `
+            <div class="guest-mobile-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge bg-light text-muted border">#${index + 1}</span>
+                  <h6 class="fw-bold mb-0 text-dark" style="font-size: 1rem;">${escapeHtml(g.name)}</h6>
+                </div>
+                ${statusBtn}
+              </div>
+
+              <div class="mb-3 text-muted small">
+                <span>${escapeHtml(g.salutation || 'Bapak/Ibu/Saudara/i')}</span>
+                ${g.phone ? ' • <i class="fa-solid fa-phone text-sage ms-1"></i> ' + escapeHtml(g.phone) : ''}
+              </div>
+
+              <div class="d-flex justify-content-end align-items-center gap-2 pt-2 border-top">
+                <button class="btn btn-outline-secondary btn-sm btn-action-icon btn-copy-row-link" data-link="${escapeHtml(link)}" title="Salin Link Undangan">
+                  <i class="fa-solid fa-link"></i>
+                </button>
+                <button class="btn btn-outline-success btn-sm btn-action-icon btn-copy-row-wa" data-text="${escapeHtml(waText)}" data-id="${g.id}" title="Salin Teks WhatsApp">
+                  <i class="fa-solid fa-clipboard"></i>
+                </button>
+                <a href="${waUrl}" target="_blank" class="btn btn-success btn-sm btn-action-icon btn-send-row-wa" data-id="${g.id}" title="Kirim via WhatsApp">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="${link}" target="_blank" class="btn btn-outline-primary btn-sm btn-action-icon" title="Buka Pratinjau Undangan">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+                <button class="btn btn-outline-danger btn-sm btn-action-icon btn-delete-row" data-id="${g.id}" title="Hapus Tamu">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          `;
+          $cardsContainer.append(card);
+        });
+
+        updateStats();
+      }
+
+      function renderWishesAdmin(wishesData) {
+        const $container = $('#wishes-admin-list');
+        $container.empty();
+
+        let wishes = [];
+        if (Array.isArray(wishesData)) {
+          wishes = wishesData;
+        } else {
+          try {
+            const raw = localStorage.getItem('fawedding_wishes_data');
+            if (raw !== null) {
+              wishes = JSON.parse(raw);
+            } else {
+              wishes = [
+                {
+                  id: 'wish_1',
+                  name: 'Rian & Sarah',
+                  presence: 'Hadir',
+                  message: 'Barakallahu lakuma wa baraka alaikuma wa jama\'a bainakuma fii khair. Selamat menempuh hidup baru untuk Dilah & Fadil! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah. Bahagia selalu sampai akhir hayat!',
+                  time: '1 jam yang lalu'
+                },
+                {
+                  id: 'wish_2',
+                  name: 'Budi Santoso',
+                  presence: 'Hadir',
+                  message: 'Selamat berbahagia Dilah dan Fadil! Semoga lancar dan berkah setiap langkah dalam membina rumah tangga.',
+                  time: '3 jam yang lalu'
+                },
+                {
+                  id: 'wish_3',
+                  name: 'Anisa & Dimas',
+                  presence: 'Tidak Hadir',
+                  message: 'Selamat ya Dilah dan Fadil! Mohon maaf kami berhalangan hadir langsung karena berada di luar kota, namun doa terbaik kami selalu menyertai kalian.',
+                  time: '6 jam yang lalu'
+                },
+                {
+                  id: 'wish_4',
+                  name: 'Keluarga Besar Alm. H. Sanusi',
+                  presence: 'Hadir',
+                  message: 'Selamat menempuh babak baru kehidupan untuk Dilah & Fadil. Semoga Allah senantiasa melimpahkan rezeki, kesehatan, dan keharmonisan.',
+                  time: '1 hari yang lalu'
+                }
+              ];
+              localStorage.setItem('fawedding_wishes_data', JSON.stringify(wishes));
+            }
+          } catch(e) {
+            wishes = [];
+          }
+        }
+
+        if (wishes.length === 0) {
+          $container.html('<div class="text-center text-muted py-4"><i class="fa-solid fa-envelope-open fa-2x mb-2 text-black-50"></i><p>Belum ada ucapan yang masuk.</p></div>');
+          updateStats();
+          return;
+        }
+
+        wishes.forEach((w, index) => {
+          let badgeClass = 'bg-success';
+          if (w.presence === 'Tidak Hadir') badgeClass = 'bg-danger';
+          else if (w.presence === 'Ragu-ragu') badgeClass = 'bg-warning text-dark';
+
+          const wishId = w.id || ('wish_' + index);
+
+          const item = `
+            <div class="p-3 bg-light rounded-3 border" data-id="${escapeHtml(wishId)}">
+              <div class="d-flex justify-content-between align-items-center mb-1 gap-2 flex-wrap">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <strong class="text-dark">${escapeHtml(w.name)}</strong>
+                  <span class="badge ${badgeClass} text-white" style="font-size: 0.72rem;">${escapeHtml(w.presence || 'Hadir')}</span>
+                </div>
+                <button class="btn btn-outline-danger btn-sm btn-action-icon btn-delete-wish" data-id="${escapeHtml(wishId)}" data-name="${escapeHtml(w.name)}" title="Hapus ucapan ini">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+              <p class="mb-1 text-secondary" style="font-size: 0.88rem; line-height: 1.5;">${escapeHtml(w.message)}</p>
+              <small class="text-muted" style="font-size: 0.75rem;"><i class="fa-solid fa-clock me-1"></i>${escapeHtml(w.time || 'Baru saja')}</small>
+            </div>
+          `;
+          $container.append(item);
+        });
+
+        updateStats();
+      }
+
+      function exportToCSV() {
+        if (guests.length === 0) {
+          iziToast.warning({ title: 'Kosong', message: 'Tidak ada data tamu untuk diekspor.', position: 'bottomRight' });
+          return;
+        }
+
+        // CSV Header with BOM for Microsoft Excel
+        let csvContent = '\uFEFF';
+        csvContent += 'No,Nama Tamu,Sapaan,Nomor WhatsApp,Status Dibagikan,Link Undangan\n';
+
+        guests.forEach((g, idx) => {
+          const num = idx + 1;
+          const name = `"${(g.name || '').replace(/"/g, '""')}"`;
+          const salutation = `"${(g.salutation || '').replace(/"/g, '""')}"`;
+          const phone = `"${(g.phone || '').replace(/"/g, '""')}"`;
+          const status = g.isShared ? '"Sudah Dibagikan"' : '"Belum Dibagikan"';
+          const link = `"${makeGuestLink(g.name)}"`;
+
+          csvContent += `${num},${name},${salutation},${phone},${status},${link}\n`;
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', `Daftar_Undangan_Dilah_Fadil_${new Date().toISOString().slice(0,10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        iziToast.success({
+          title: 'Berhasil Diekspor',
+          message: 'Daftar undangan berhasil diunduh dalam format CSV.',
+          position: 'bottomRight'
+        });
+      }
+
+      $(document).ready(function() {
+        loadGuests();
+        renderTable();
+
+        if (window.FaweddingDB) {
+          window.FaweddingDB.subscribeWishes(function(wishes) {
+            renderWishesAdmin(wishes);
+            updateStats();
+          });
+        } else {
+          renderWishesAdmin();
+        }
+
+        // Ensure Tab switching works with Bootstrap 5
+        $('#adminTabs button').on('click', function(e) {
+          e.preventDefault();
+          bootstrap.Tab.getOrCreateInstance(this).show();
+        });
+
+        // Form Submit
+        $('#form-create-guest').on('submit', function(e) {
+          e.preventDefault();
+          const name = $('#guest-name').val().trim();
+          const salutation = $('#guest-salutation').val();
+          const phone = $('#guest-phone').val().trim();
+
+          if (!name) return;
+
+          const newId = Date.now().toString();
+          const newGuest = {
+            id: newId,
+            name: name,
+            salutation: salutation,
+            phone: phone,
+            isShared: false,
+            createdAt: new Date().toISOString()
+          };
+
+          currentGeneratedId = newId;
+          guests.unshift(newGuest);
+          saveGuests();
+          renderTable();
+
+          // Fill Result Box
+          const link = makeGuestLink(name);
+          const waText = makeWaText(salutation, name);
+          let cleanPhone = phone.replace(/\D/g, '');
+          if (cleanPhone.startsWith('0')) cleanPhone = '62' + cleanPhone.substring(1);
+          const waUrl = cleanPhone 
+            ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(waText)}`
+            : `https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`;
+
+          $('#res-name').text(name);
+          $('#res-link').val(link);
+          $('#btn-preview-link').attr('href', link);
+          $('#res-wa-text').val(waText);
+          $('#btn-send-wa').attr('href', waUrl);
+          $('#res-timestamp').text('Baru saja dibuat');
+          $('#btn-mark-result-shared').html('<i class="fa-solid fa-check me-1"></i> Tandai Sudah Dikirim').removeClass('btn-success').addClass('btn-outline-secondary');
+          $('#result-container').removeClass('d-none');
+
+          // Auto Copy link for instant sharing convenience
+          copyText(link, `Link untuk ${name} berhasil dibuat & disalin!`);
+
+          $('#guest-name').val('').focus();
+          $('#guest-phone').val('');
+        });
+
+        // Toggle Status in Table
+        $(document).on('click', '.btn-toggle-status', function() {
+          const id = $(this).data('id').toString();
+          const guest = guests.find(g => g.id.toString() === id);
+          if (guest) {
+            guest.isShared = !guest.isShared;
+            saveGuests();
+            renderTable();
+            iziToast.info({
+              title: 'Status Diperbarui',
+              message: `Status undangan ${guest.name} diubah menjadi: ${guest.isShared ? 'Sudah Dibagikan' : 'Belum Dibagikan'}.`,
+              position: 'bottomRight'
+            });
+          }
+        });
+
+        // Mark shared from Result Box
+        $('#btn-mark-result-shared').on('click', function() {
+          if (!currentGeneratedId) return;
+          const guest = guests.find(g => g.id.toString() === currentGeneratedId.toString());
+          if (guest) {
+            guest.isShared = true;
+            saveGuests();
+            renderTable();
+            $(this).html('<i class="fa-solid fa-circle-check me-1"></i> Sudah Ditandai Dibagikan').removeClass('btn-outline-secondary').addClass('btn-success');
+            iziToast.success({
+              title: 'Selesai',
+              message: `Undangan untuk ${guest.name} ditandai sudah dibagikan.`,
+              position: 'bottomRight'
+            });
+          }
+        });
+
+        // Result Box copy buttons
+        $('#btn-copy-link').on('click', function() {
+          copyText($('#res-link').val(), 'Link undangan berhasil disalin!');
+        });
+        $('#btn-copy-wa').on('click', function() {
+          copyText($('#res-wa-text').val(), 'Format pesan WhatsApp berhasil disalin!');
+        });
+
+        // Table Row Actions
+        $(document).on('click', '.btn-copy-row-link', function() {
+          copyText($(this).data('link'), 'Link undangan berhasil disalin!');
+        });
+
+        $(document).on('click', '.btn-copy-row-wa', function() {
+          const id = $(this).data('id');
+          copyText($(this).data('text'), 'Pesan WhatsApp berhasil disalin!');
+        });
+
+        $(document).on('click', '.btn-send-row-wa', function() {
+          const id = $(this).data('id').toString();
+          const guest = guests.find(g => g.id.toString() === id);
+          if (guest && !guest.isShared) {
+            guest.isShared = true;
+            saveGuests();
+            renderTable();
+          }
+        });
+
+        // Delete Row
+        $(document).on('click', '.btn-delete-row', function() {
+          const id = $(this).data('id').toString();
+          const guest = guests.find(g => g.id.toString() === id);
+          const name = guest ? guest.name : 'tamu ini';
+          if (confirm(`Apakah Anda yakin ingin menghapus undangan untuk "${name}"?`)) {
+            guests = guests.filter(g => g.id.toString() !== id);
+            saveGuests();
+            renderTable();
+            iziToast.info({
+              title: 'Dihapus',
+              message: 'Data tamu berhasil dihapus.',
+              position: 'bottomRight'
+            });
+          }
+        });
+
+        // Filter / Search
+        $('#search-input').on('input', renderTable);
+        $('#filter-status').on('change', renderTable);
+
+        // Export to CSV
+        $('#btn-export-csv').on('click', exportToCSV);
+
+        // Clear All Guests
+        $('#btn-clear-all').on('click', function() {
+          if (confirm('PERINGATAN: Apakah Anda yakin ingin menghapus SELURUH daftar tamu undangan?')) {
+            guests = [];
+            saveGuests();
+            renderTable();
+            iziToast.warning({
+              title: 'Daftar Dikosongkan',
+              message: 'Semua daftar tamu berhasil dihapus.',
+              position: 'bottomRight'
+            });
+          }
+        });
+
+        // Refresh Wishes
+        $('#btn-refresh-wishes').on('click', function() {
+          renderWishesAdmin();
+          updateStats();
+          iziToast.success({
+            title: 'Diperbarui',
+            message: 'Daftar buku tamu & RSVP berhasil disegarkan.',
+            position: 'bottomRight'
+          });
+        });
+
+        // Delete Single Wish
+        $(document).on('click', '.btn-delete-wish', function() {
+          const id = $(this).data('id').toString();
+          const name = $(this).data('name') || 'tamu ini';
+
+          if (confirm(`Apakah Anda yakin ingin menghapus ucapan dari "${name}"?`)) {
+            if (window.FaweddingDB) {
+              window.FaweddingDB.deleteWish(id);
+            } else {
+              let wishes = [];
+              try {
+                wishes = JSON.parse(localStorage.getItem('fawedding_wishes_data') || '[]');
+              } catch(e) {}
+
+              const newWishes = wishes.filter((w, idx) => {
+                const currentId = (w.id || ('wish_' + idx)).toString();
+                return currentId !== id;
+              });
+
+              localStorage.setItem('fawedding_wishes_data', JSON.stringify(newWishes));
+              renderWishesAdmin();
+              updateStats();
+              window.dispatchEvent(new Event('storage'));
+            }
+
+            iziToast.info({
+              title: 'Dihapus',
+              message: `Ucapan dari ${name} berhasil dihapus.`,
+              position: 'bottomRight'
+            });
+          }
+        });
+
+        // Clear All Wishes
+        $('#btn-clear-wishes').on('click', function() {
+          if (confirm('PERINGATAN: Apakah Anda yakin ingin menghapus SEMUA ucapan doa & kehadiran tamu?')) {
+            if (window.FaweddingDB) {
+              window.FaweddingDB.clearAllWishes();
+            } else {
+              localStorage.setItem('fawedding_wishes_data', JSON.stringify([]));
+              renderWishesAdmin();
+              updateStats();
+              window.dispatchEvent(new Event('storage'));
+            }
+
+            iziToast.warning({
+              title: 'Dikosongkan',
+              message: 'Semua ucapan berhasil dihapus dari sistem.',
+              position: 'bottomRight'
+            });
+          }
+        });
+
+        // Real-time Storage Sync with Public Invitation Page
+        window.addEventListener('storage', function(e) {
+          if (!e.key || e.key === 'fawedding_wishes_data') {
+            renderWishesAdmin();
+            updateStats();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

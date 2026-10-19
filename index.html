@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>The Wedding of Dilah &amp; Fadil - Undangan Pernikahan</title>
+  
+  <meta name="description" content="Undangan Pernikahan Digital Siti Padillah &amp; Fadilah">
+  <meta property="og:title" content="The Wedding of Dilah &amp; Fadil">
+  <meta property="og:description" content="Minggu, 1 November 2026 - Tanpa mengurangi rasa hormat, kami mengundang Anda untuk merayakan hari bahagia pernikahan kami.">
+  <meta property="og:image" content="./assets/images/couple_hero.jpg">
+
+  <!-- Local Stylesheets & Fonts -->
+  <link rel="stylesheet" href="./assets/css/local-fonts.css">
+  <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./assets/css/iziToast.css">
+  <link rel="stylesheet" href="./assets/css/garden-watercolor.css">
+</head>
+<body style="overflow-y: hidden;">
+
+  <!-- Audio Element -->
+  <audio id="wedding-audio" loop preload="auto">
+    <source src="./assets/audio/wedding_bgm.mp3" type="audio/mpeg">
+    Browser Anda tidak mendukung audio player.
+  </audio>
+
+  <!-- Floating Audio Button -->
+  <div id="floating-music-btn" class="floating-music-btn d-none" title="Putar / Jeda Musik">
+    <i class="fa-solid fa-music"></i>
+  </div>
+
+  <!-- Floating Bottom Navigation -->
+  <nav id="floating-nav-bar" class="floating-nav d-none">
+    <a href="#hero-top" class="nav-pill-btn active"><i class="fa-solid fa-house"></i><span>Beranda</span></a>
+    <a href="#mempelai" class="nav-pill-btn"><i class="fa-solid fa-heart"></i><span>Mempelai</span></a>
+    <a href="#acara" class="nav-pill-btn"><i class="fa-solid fa-calendar-check"></i><span>Acara</span></a>
+    <a href="#turut-mengundang" class="nav-pill-btn"><i class="fa-solid fa-users"></i><span>Undangan</span></a>
+    <a href="#hadiah" class="nav-pill-btn"><i class="fa-solid fa-gift"></i><span>Hadiah</span></a>
+    <a href="#ucapan" class="nav-pill-btn"><i class="fa-solid fa-comments"></i><span>Ucapan</span></a>
+  </nav>
+
+  <!-- =======================================================
+       COVER SCREEN (Fullscreen Hero Modal)
+       ======================================================= -->
+  <div id="cover-screen" class="cover-screen" style="background-image: url('./assets/images/couple_hero.jpg'); background-position: center top;">
+    <div class="cover-content">
+      <img src="./assets/images/watercolor/watercolor_corner_top.png" alt="Wreath" style="max-width: 140px; margin-bottom: 0.5rem; opacity: 0.9;">
+      <div class="cover-header-subtitle">The Wedding Of</div>
+      <h1 class="cover-title">Dilah &amp; Fadil</h1>
+      <p class="text-white-50 mb-3" style="font-size: 0.95rem; letter-spacing: 1px;">Minggu, 1 November 2026</p>
+
+      <!-- Personal Guest Box -->
+      <div class="cover-guest-box">
+        <div class="cover-guest-salutation">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
+        <div id="cover-guest-name" class="cover-guest-name">Nama Tamu</div>
+        <small class="text-white-50 d-block mt-2 fst-italic" style="font-size: 0.76rem;">*Mohon maaf apabila ada kesalahan dalam penulisan nama &amp; gelar</small>
+      </div>
+
+      <button id="btn-open-invitation" class="btn-open-invitation">
+        <i class="fa-solid fa-envelope-open me-2"></i> Buka Undangan
+      </button>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       MAIN INVITATION WRAPPER
+       ======================================================= -->
+  <div class="main-wrapper" id="hero-top">
+
+    <!-- Desktop Sticky Sidebar (Left Side) - image aligned to top so heads are never cut off -->
+    <aside class="desktop-fixed-sidebar" style="background-image: url('./assets/images/couple_hero.jpg'); background-position: center top;">
+      <div class="sidebar-content">
+        <span style="letter-spacing: 4px; font-size: 0.85rem; text-transform: uppercase;">Undangan Pernikahan</span>
+        <h2 class="sidebar-title mt-2">Dilah &amp; Fadil</h2>
+      </div>
+      <div class="sidebar-content">
+        <p class="mb-1" style="font-size: 0.95rem;">Undangan Khusus Untuk:</p>
+        <h4 id="hero-guest-name" class="fw-bold text-white mb-3">Nama Tamu</h4>
+        <small class="text-white-50">Minggu, 1 November 2026 &bull; Ciomas, Bogor</small>
+      </div>
+    </aside>
+
+    <!-- Main Content (Right Side on Desktop, Full Width on Mobile) -->
+    <main class="main-scrollable-content">
+
+      <!-- Mobile Only Hero Banner -->
+      <section class="mobile-hero-banner d-block d-lg-none text-center">
+        <div class="mobile-hero-card">
+          <img src="./assets/images/couple_hero.jpg" alt="Dilah & Fadil" class="mobile-hero-img">
+          <div class="mobile-hero-overlay">
+            <span class="mobile-hero-subtitle">UNDANGAN PERNIKAHAN</span>
+            <h2 class="mobile-hero-title">Dilah &amp; Fadil</h2>
+            <div class="mobile-hero-guest-box">
+              <small class="d-block text-white-50 mb-1" style="font-size: 0.8rem;">Undangan Khusus Untuk:</small>
+              <h5 id="mobile-hero-guest-name" class="fw-bold text-white mb-1">Nama Tamu</h5>
+              <small class="text-white-50" style="font-size: 0.75rem;">Minggu, 1 November 2026 &bull; Ciomas, Bogor</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Top Ayat / Quote Section -->
+      <section class="wedding-section pt-2 pb-4">
+        <img src="./assets/images/watercolor/watercolor_divider_1.png" alt="Divider" class="section-divider-img mb-3">
+        <div class="arabic-text mb-3">
+          وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ
+        </div>
+        <p class="fst-italic text-muted px-2" style="font-size: 0.9rem; line-height: 1.8;">
+          "Dan di antara tanda-tanda kebesaran-Nya ialah diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu cenderung dan merasa tentram kepadanya dan dijadikan-Nya di antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu menjadi tanda-tanda bagi kaum yang berfikir."
+        </p>
+        <strong class="text-sage" style="font-size: 0.85rem; letter-spacing: 1px;">(Surat Ar-Ruum : 21)</strong>
+        <img src="./assets/images/watercolor/watercolor_divider_2.png" alt="Divider" class="section-divider-img mt-3">
+      </section>
+
+      <!-- ===================================================
+           COUPLE SECTION
+           =================================================== -->
+      <section id="mempelai" class="wedding-section">
+        <div class="section-heading-script">Pengantin</div>
+        <h2 class="section-heading-serif">Mempelai Bahagia</h2>
+        <p class="section-subtitle">Dengan memohon rahmat dan ridho Allah Subhanahu wa Ta'ala, kami bermaksud menyelenggarakan syukuran pernikahan putra-putri kami:</p>
+
+        <!-- Bride Card (Siti Padillah) -->
+        <div class="content-card">
+          <div class="couple-avatar-wrap">
+            <img src="./assets/images/bride_avatar.jpg" alt="Siti Padillah" class="couple-avatar-img">
+            <img src="./assets/images/watercolor/watercolor_wreath.png" alt="Wreath Frame" class="couple-wreath-img">
+          </div>
+          <h3 class="couple-name">Siti Padillah</h3>
+          <div class="couple-parents mb-2">
+            Putri pertama dari pasangan<br>
+            <strong>Bapak Japar</strong> &amp; <strong>Ibu Herlina</strong><br>
+            <small class="text-muted">Ciomas, Bogor</small>
+          </div>
+        </div>
+
+        <div class="my-3 font-script text-sage" style="font-size: 3rem; line-height: 1;">&amp;</div>
+
+        <!-- Groom Card (Fadilah) -->
+        <div class="content-card">
+          <div class="couple-avatar-wrap">
+            <img src="./assets/images/groom_avatar.jpg" alt="Fadilah" class="couple-avatar-img">
+            <img src="./assets/images/watercolor/watercolor_wreath.png" alt="Wreath Frame" class="couple-wreath-img">
+          </div>
+          <h3 class="couple-name">Fadilah</h3>
+          <div class="couple-parents mb-2">
+            Putra ke-4 dari pasangan<br>
+            <strong>Bapak H. Otong (Alm)</strong> &amp; <strong>Ibu Neneng Khodijah (Almh)</strong><br>
+            <small class="text-muted">Bogor</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================
+           EVENT DETAIL & COUNTDOWN SECTION
+           =================================================== -->
+      <section id="acara" class="wedding-section">
+        <div class="section-heading-script">Hari Bahagia</div>
+        <h2 class="section-heading-serif">Rangkaian Acara</h2>
+        <p class="section-subtitle">Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan Akad dan Resepsi Pernikahan kami pada:</p>
+
+        <!-- Countdown Timer -->
+        <div class="countdown-container">
+          <div class="countdown-box">
+            <div id="cd-days" class="countdown-number">00</div>
+            <div class="countdown-label">Hari</div>
+          </div>
+          <div class="countdown-box">
+            <div id="cd-hours" class="countdown-number">00</div>
+            <div class="countdown-label">Jam</div>
+          </div>
+          <div class="countdown-box">
+            <div id="cd-mins" class="countdown-number">00</div>
+            <div class="countdown-label">Menit</div>
+          </div>
+          <div class="countdown-box">
+            <div id="cd-secs" class="countdown-number">00</div>
+            <div class="countdown-label">Detik</div>
+          </div>
+        </div>
+
+        <!-- Akad Nikah Card -->
+        <div class="event-card mb-4">
+          <div class="event-icon-circle"><i class="fa-solid fa-heart"></i></div>
+          <h3 class="event-title">Akad Pernikahan</h3>
+          <div class="fw-bold text-dark">Minggu, 1 November 2026</div>
+          <div class="event-time"><i class="fa-solid fa-clock me-1"></i> 09.00 WIB</div>
+          <div class="event-venue">Kediaman Mempelai Wanita</div>
+          <p class="event-address">Kp. Cipayung Rt 02 / 05 Desa. Sukaharja, Kec. Ciomas Bogor</p>
+          <div class="d-flex flex-wrap justify-content-center gap-2">
+            <a href="https://maps.google.com/?q=Kp.+Cipayung+Rt+02+05+Desa+Sukaharja+Ciomas+Bogor" target="_blank" class="btn btn-sm btn-outline-sage px-3">
+              <i class="fa-solid fa-location-dot me-1"></i> Buka Google Maps
+            </a>
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Akad+Pernikahan+Dilah+%26+Fadil&dates=20261101T020000Z/20261101T040000Z&details=Akad+Pernikahan+Dilah+%26+Fadil&location=Kp.+Cipayung+Rt+02+05+Desa+Sukaharja+Ciomas+Bogor" target="_blank" class="btn btn-sm btn-sage px-3">
+              <i class="fa-solid fa-calendar-plus me-1"></i> Simpan Kalender
+            </a>
+          </div>
+        </div>
+
+        <!-- Resepsi Pernikahan Card -->
+        <div class="event-card">
+          <div class="event-icon-circle"><i class="fa-solid fa-champagne-glasses"></i></div>
+          <h3 class="event-title">Resepsi Pernikahan</h3>
+          <div class="fw-bold text-dark">Minggu, 1 November 2026</div>
+          <div class="event-time"><i class="fa-solid fa-clock me-1"></i> 10.00 WIB - Selesai</div>
+          <div class="event-venue">Kediaman Mempelai Wanita</div>
+          <p class="event-address">Kp. Cipayung Rt 02 / 05 Desa. Sukaharja, Kec. Ciomas Bogor</p>
+          <div class="d-flex flex-wrap justify-content-center gap-2">
+            <a href="https://maps.google.com/?q=Kp.+Cipayung+Rt+02+05+Desa+Sukaharja+Ciomas+Bogor" target="_blank" class="btn btn-sm btn-outline-sage px-3">
+              <i class="fa-solid fa-location-dot me-1"></i> Buka Google Maps
+            </a>
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Resepsi+Pernikahan+Dilah+%26+Fadil&dates=20261101T030000Z/20261101T090000Z&details=Resepsi+Pernikahan+Dilah+%26+Fadil&location=Kp.+Cipayung+Rt+02+05+Desa+Sukaharja+Ciomas+Bogor" target="_blank" class="btn btn-sm btn-sage px-3">
+              <i class="fa-solid fa-calendar-plus me-1"></i> Simpan Kalender
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================
+           TURUT MENGUNDANG SECTION
+           =================================================== -->
+      <section id="turut-mengundang" class="wedding-section">
+        <div class="section-heading-script">Segenap Keluarga</div>
+        <h2 class="section-heading-serif">Turut Mengundang</h2>
+        <p class="section-subtitle">Ungkapan rasa hormat dan terima kasih yang tulus kepada segenap keluarga besar, alim ulama, tokoh masyarakat, dan handai taulan:</p>
+
+        <div class="turut-mengundang-box">
+          <div class="turut-expandable" id="turut-expandable-wrap">
+            <div class="turut-mengundang-list">
+              <div class="turut-item"><span class="turut-item-num">1.</span><span>KH. Ali Dimyati</span></div>
+              <div class="turut-item"><span class="turut-item-num">2.</span><span>Ustadz Abdul Fatah</span></div>
+              <div class="turut-item"><span class="turut-item-num">3.</span><span>Ustadz Ansori</span></div>
+              <div class="turut-item"><span class="turut-item-num">4.</span><span>Bpk. Rahmat Jebeng <small class="text-muted">(Kades Sukaharja)</small></span></div>
+              <div class="turut-item"><span class="turut-item-num">5.</span><span>Bpk. Sulaiman <small class="text-muted">(Ket. Rt 02)</small></span></div>
+              <div class="turut-item"><span class="turut-item-num">6.</span><span>Bpk. Iwan Tarmidzi <small class="text-muted">(Ket. RW 05)</small></span></div>
+              <div class="turut-item"><span class="turut-item-num">7.</span><span>Kel. Besar Alm Abah H. Asrin</span></div>
+              <div class="turut-item"><span class="turut-item-num">8.</span><span>Kel. Besar Alm Abah Sain</span></div>
+              <div class="turut-item"><span class="turut-item-num">9.</span><span>Kel. Besar Bani Sahari</span></div>
+              <div class="turut-item"><span class="turut-item-num">10.</span><span>Kel. Besar Alm Bapak Enjam</span></div>
+              <div class="turut-item"><span class="turut-item-num">11.</span><span>Kiyai Ahmad Hidayatullah <small class="text-muted">(Pimpinan Ponpes Nurul Kamilah)</small></span></div>
+              <div class="turut-item"><span class="turut-item-num">12.</span><span>Ustadz Memed Kosasih <small class="text-muted">(Pimpinan Paud Qur'an Al-Mutadiin)</small></span></div>
+              <div class="turut-item"><span class="turut-item-num">13.</span><span>Grup Manakib D'kopian</span></div>
+              <div class="turut-item"><span class="turut-item-num">14.</span><span>Pahri <small class="text-muted">(Adinda)</small></span></div>
+              <div class="turut-item"><span class="turut-item-num">15.</span><span>Segenap Pemuda/i Cipayung</span></div>
+              <div class="turut-item"><span class="turut-item-num">16.</span><span>Kel. Besar (Alm) Abah H. Tabroni</span></div>
+              <div class="turut-item"><span class="turut-item-num">17.</span><span>Kel. Besar (Alm) Abah H. Rais</span></div>
+              <div class="turut-item"><span class="turut-item-num">18.</span><span>Akang Cece Bustomi <small class="text-muted">(Pimpinan Ponpes Al-Adjrumi)</small></span></div>
+              <div class="turut-item"><span class="turut-item-num">19.</span><span>Kel. Besar Ponpes Al-Adjrumi</span></div>
+              <div class="turut-item"><span class="turut-item-num">20.</span><span><strong>PT. Bestari Property</strong></span></div>
+            </div>
+            <div class="turut-fade-overlay"></div>
+          </div>
+          <div class="text-center">
+            <button type="button" id="btn-toggle-turut" class="btn-turut-toggle">
+              <span id="turut-toggle-text">Lihat Selengkapnya</span> <i id="turut-toggle-icon" class="fa fa-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================
+           DIGITAL GIFT (AMPLOP DIGITAL)
+           =================================================== -->
+      <section id="hadiah" class="wedding-section">
+        <div class="section-heading-script">Tanda Kasih</div>
+        <h2 class="section-heading-serif">Kado &amp; Amplop Digital</h2>
+        <p class="section-subtitle">Doa restu Anda merupakan karunia terindah bagi kami. Namun bagi Bapak/Ibu/Saudara/i yang ingin memberikan tanda kasih secara digital, dapat melalui rekening berikut:</p>
+
+        <!-- Bank 1: BCA -->
+        <div class="bank-card">
+          <div class="bank-header">
+            <span class="bank-badge">BCA</span>
+            <i class="fa-solid fa-credit-card text-muted"></i>
+          </div>
+          <div class="text-muted small">Nomor Rekening:</div>
+          <div class="bank-acc-number mb-1">7310892019</div>
+          <div class="small text-muted mb-3">a.n. Fadilah</div>
+          <button class="btn btn-sm btn-outline-sage btn-copy-account w-100" data-bank="BCA" data-number="7310892019">
+            <i class="fa-solid fa-copy me-1"></i> Salin Nomor Rekening
+          </button>
+        </div>
+
+        <!-- Bank 2: BSI -->
+        <div class="bank-card">
+          <div class="bank-header">
+            <span class="bank-badge">Bank Syariah Indonesia</span>
+            <i class="fa-solid fa-credit-card text-muted"></i>
+          </div>
+          <div class="text-muted small">Nomor Rekening:</div>
+          <div class="bank-acc-number mb-1">9102837465</div>
+          <div class="small text-muted mb-3">a.n. Siti Padillah</div>
+          <button class="btn btn-sm btn-outline-sage btn-copy-account w-100" data-bank="BSI" data-number="9102837465">
+            <i class="fa-solid fa-copy me-1"></i> Salin Nomor Rekening
+          </button>
+        </div>
+
+        <!-- Bank 3: Mandiri -->
+        <div class="bank-card">
+          <div class="bank-header">
+            <span class="bank-badge">Bank Mandiri</span>
+            <i class="fa-solid fa-credit-card text-muted"></i>
+          </div>
+          <div class="text-muted small">Nomor Rekening:</div>
+          <div class="bank-acc-number mb-1">1370018293041</div>
+          <div class="small text-muted mb-3">a.n. Fadilah</div>
+          <button class="btn btn-sm btn-outline-sage btn-copy-account w-100" data-bank="Mandiri" data-number="1370018293041">
+            <i class="fa-solid fa-copy me-1"></i> Salin Nomor Rekening
+          </button>
+        </div>
+
+        <!-- Physical Gift Address -->
+        <div class="bank-card mt-3">
+          <div class="bank-header">
+            <span class="bank-badge bg-light text-dark"><i class="fa-solid fa-gift me-1"></i> Kirim Kado Fisik</span>
+          </div>
+          <div class="small text-muted">Penerima: <strong>Dilah &amp; Fadil (0895-3204-63960)</strong></div>
+          <p class="small text-secondary mb-3 mt-1">Kediaman Mempelai Wanita, Kp. Cipayung Rt 02 / 05 Desa. Sukaharja, Kec. Ciomas Bogor</p>
+          <button id="btn-copy-address" class="btn btn-sm btn-outline-secondary w-100" data-address="Kediaman Mempelai Wanita, Kp. Cipayung Rt 02 / 05 Desa. Sukaharja, Kec. Ciomas Bogor">
+            <i class="fa-solid fa-clipboard me-1"></i> Salin Alamat Pengiriman
+          </button>
+        </div>
+      </section>
+
+      <!-- ===================================================
+           RSVP & SEND A WISH (BUKU TAMU)
+           =================================================== -->
+      <section id="ucapan" class="wedding-section">
+        <div class="section-heading-script">Konfirmasi &amp; Doa</div>
+        <h2 class="section-heading-serif">Buku Tamu &amp; RSVP</h2>
+        <p class="section-subtitle">Kehadiran dan doa restu Anda merupakan kehormatan serta kebahagiaan yang tak terhingga bagi kami sekeluarga:</p>
+
+        <!-- RSVP Card -->
+        <div class="content-card mb-4" id="rsvp-form-container">
+          <h5 class="fw-bold mb-3 text-sage"><i class="fa-solid fa-square-check me-2"></i> Konfirmasi Kehadiran (RSVP)</h5>
+          <form id="form-rsvp">
+            <div class="mb-3 text-start">
+              <label class="form-label small fw-semibold">Nama Tamu Undangan</label>
+              <input type="text" id="rsvp-name" class="form-control" placeholder="Nama Anda" required>
+            </div>
+            <div class="mb-3 text-start">
+              <label class="form-label small fw-semibold">Konfirmasi Kehadiran</label>
+              <div class="d-flex gap-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="rsvp_presence" id="rad-hadir" value="Hadir" checked>
+                  <label class="form-check-label" for="rad-hadir">Hadir</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="rsvp_presence" id="rad-ragu" value="Ragu-ragu">
+                  <label class="form-check-label" for="rad-ragu">Ragu-ragu</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="rsvp_presence" id="rad-tidak" value="Tidak Hadir">
+                  <label class="form-check-label" for="rad-tidak">Tidak Hadir</label>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3 text-start">
+              <label class="form-label small fw-semibold">Jumlah Tamu yang Hadir</label>
+              <select id="rsvp-count" class="form-select">
+                <option value="1">1 Orang</option>
+                <option value="2">2 Orang</option>
+                <option value="3">3 Orang</option>
+                <option value="4">4 Orang</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-sage w-100 py-2">
+              <i class="fa-solid fa-paper-plane me-1"></i> Konfirmasi Sekarang
+            </button>
+          </form>
+        </div>
+
+        <!-- Send a Wish Card (Autofilled Name) -->
+        <div class="content-card text-start">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0 text-sage"><i class="fa-solid fa-comments me-2"></i> Kirim Ucapan &amp; Doa Restu</h5>
+            <span class="badge bg-secondary" id="wishes-count-badge">0</span>
+          </div>
+
+          <form id="form-wish" class="mb-4">
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Nama Pengirim</label>
+              <!-- Name is automatically filled from URL ?to={nama} or /{nama} -->
+              <input type="text" id="wish-name" class="form-control" placeholder="Nama Anda" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Konfirmasi Kehadiran</label>
+              <select id="wish-presence" class="form-select">
+                <option value="Hadir">Hadir</option>
+                <option value="Tidak Hadir">Tidak Hadir</option>
+                <option value="Ragu-ragu">Ragu-ragu</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Ucapan &amp; Doa</label>
+              <textarea id="wish-message" class="form-control" rows="3" placeholder="Tuliskan ucapan selamat &amp; doa restu untuk kedua mempelai..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-sage w-100 py-2">
+              <i class="fa-solid fa-paper-plane me-1"></i> Kirim Ucapan
+            </button>
+          </form>
+
+          <!-- List of Wishes -->
+          <div class="wishes-box" id="wishes-list-container">
+            <!-- Dynamic wishes rendered by app-main.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================
+           FOOTER
+           =================================================== -->
+      <footer class="wedding-section pt-3 pb-5">
+        <p class="mb-4 px-2" style="font-size: 0.95rem; line-height: 1.7;">
+          Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada kedua mempelai.
+        </p>
+
+        <div class="font-script text-sage mb-3" style="font-size: 2.8rem;">Dilah &amp; Fadil</div>
+        <small class="text-muted d-block">&copy; 2026 Fawedding. All Rights Reserved.</small>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./assets/js/jquery-3.6.0.min.js"></script>
+  <script src="./assets/js/bootstrap.bundle.min.js"></script>
+  <script src="./assets/js/iziToast.min.js"></script>
+  <!-- Firebase Cloud Firestore SDK & Sync Service -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="./assets/js/firebase-config.js"></script>
+  <script src="./assets/js/firebase-sync.js"></script>
+  <script src="./assets/js/wedding-config.js"></script>
+  <script src="./assets/js/particles.js"></script>
+  <script src="./assets/js/app-main.js"></script>
+</body>
+</html>

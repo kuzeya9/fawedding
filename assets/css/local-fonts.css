@@ -1,0 +1,58 @@
+/* Local Fonts for Fawedding */
+
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url('../fonts/NunitoSans-Latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url('../fonts/NunitoSans-Latin-Italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Prata';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/Prata-Latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: "Carmilla";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/CarmillaRegular.woff2') format('woff2'),
+       url('../fonts/CarmillaRegular.woff') format('woff');
+}
+
+@font-face {
+  font-family: "BrittanySignature";
+  src: url('../fonts/BrittanySignature.TTF') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Hearth Stone";
+  src: url('../fonts/Hearth-Stone.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "hearth stone";
+  src: url('../fonts/Hearth-Stone.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Le Major";
+  src: url('../fonts/Le Major.ttf') format('truetype');
+  font-display: swap;
+}
