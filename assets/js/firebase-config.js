@@ -1,17 +1,11 @@
 // ==========================================================================
 // FIREBASE CONFIGURATION - FAWEDDING
 // ==========================================================================
-// Cara mendapatkan konfigurasi ini:
-// 1. Buka https://console.firebase.google.com/
-// 2. Buat project baru (contoh: "fawedding")
-// 3. Masuk ke Project Settings -> "Your apps" -> klik icon Web (</>)
-// 4. Salin firebaseConfig di bawah ini:
-
 window.FIREBASE_CONFIG = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyC27rCoAyZsBMd4SbDwYnlSKChNpkeZ8Bo",
+  authDomain: "hardy-binder-406803.firebaseapp.com",
+  projectId: "hardy-binder-406803",
+  storageBucket: "hardy-binder-406803.firebasestorage.app",
+  messagingSenderId: "547264192097",
+  appId: "1:547264192097:web:0b8328f5e083f313bc1420"
 };
