@@ -61,10 +61,14 @@ export default defineConfig({
         });
       },
       closeBundle() {
-        // Ensure static assets (js, audio, images, fonts) and img folder are copied into dist
+        // Ensure static assets (js, images) and img folder are copied into dist
         const distAssetsJs = path.resolve(__dirname, 'dist/assets/js');
         const srcAssetsJs = path.resolve(__dirname, 'assets/js');
         copyDirRecursive(srcAssetsJs, distAssetsJs);
+
+        const distAssetsImages = path.resolve(__dirname, 'dist/assets/images');
+        const srcAssetsImages = path.resolve(__dirname, 'assets/images');
+        copyDirRecursive(srcAssetsImages, distAssetsImages);
 
         const distImg = path.resolve(__dirname, 'dist/img');
         const srcImg = path.resolve(__dirname, 'img');

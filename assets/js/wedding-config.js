@@ -68,7 +68,7 @@ window.WEDDING_CONFIG = {
       time: "09.00 WIB",
       venueName: "Kediaman Mempelai Wanita",
       address: "Kp. Cipayung Rt 02 / 05 Desa. Sukaharja, Kec. Ciomas Bogor",
-      mapsUrl: "https://maps.google.com/?q=Kp.+Cipayung+Rt+02+05+Desa+Sukaharja+Ciomas+Bogor",
+      mapsUrl: "https://maps.app.goo.gl/zZxQb4jtHbRUW8Xa9",
       calendarUrl: "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Akad+Pernikahan+Dilah+%26+Fadil&dates=20261101T020000Z/20261101T040000Z&details=Akad+Pernikahan+Dilah+%26+Fadil&location=Kp.+Cipayung+Rt+02+05+Desa+Sukaharja+Ciomas+Bogor"
     },
     resepsi: {
@@ -78,7 +78,7 @@ window.WEDDING_CONFIG = {
       time: "10.00 WIB - Selesai",
       venueName: "Kediaman Mempelai Wanita",
       address: "Kp. Cipayung Rt 02 / 05 Desa. Sukaharja, Kec. Ciomas Bogor",
-      mapsUrl: "https://maps.google.com/?q=Kp.+Cipayung+Rt+02+05+Desa+Sukaharja+Ciomas+Bogor",
+      mapsUrl: "https://maps.app.goo.gl/zZxQb4jtHbRUW8Xa9",
       calendarUrl: "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Resepsi+Pernikahan+Dilah+%26+Fadil&dates=20261101T030000Z/20261101T090000Z&details=Resepsi+Pernikahan+Dilah+%26+Fadil&location=Kp.+Cipayung+Rt+02+05+Desa+Sukaharja+Ciomas+Bogor"
     }
   },
@@ -136,22 +136,21 @@ window.WEDDING_CONFIG = {
   gifts: {
     bankAccounts: [
       {
-        bankName: "BCA",
-        accountNumber: "7310892019",
-        holderName: "Fadilah",
-        badge: "Bank BCA"
+        bankName: "Bank Syariah Indonesia",
+        shortName: "BSI",
+        accountNumber: "7182747267",
+        holderName: "FADILAH",
+        logo: "./assets/images/logo-bsi.png",
+        badge: "Mempelai Pria"
       },
       {
-        bankName: "Bank Syariah Indonesia (BSI)",
-        accountNumber: "9102837465",
+        bankName: "DANA",
+        shortName: "DANA",
+        accountNumber: "085811589346",
+        displayNumber: "+62 858-1158-9346",
         holderName: "Siti Padillah",
-        badge: "BSI"
-      },
-      {
-        bankName: "Bank Mandiri",
-        accountNumber: "1370018293041",
-        holderName: "Fadilah",
-        badge: "Mandiri"
+        logo: "./assets/images/logo-dana.png",
+        badge: "Mempelai Wanita"
       }
     ],
     physicalGift: {

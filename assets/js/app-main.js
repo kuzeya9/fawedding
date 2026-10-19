@@ -167,7 +167,7 @@
           iziToast.success({
             title: 'Tersalin',
             message: successMessage,
-            position: 'bottomRight'
+            position: window.innerWidth < 768 ? 'topCenter' : 'bottomRight'
           });
         } else {
           alert(successMessage);
@@ -271,7 +271,8 @@
     $('.btn-copy-account').on('click', function() {
       const num = $(this).data('number');
       const bank = $(this).data('bank') || 'rekening';
-      copyTextToClipboard(num, `Nomor rekening ${bank} berhasil disalin!`);
+      const msg = bank === 'DANA' ? 'Nomor DANA berhasil disalin!' : `Nomor rekening ${bank} berhasil disalin!`;
+      copyTextToClipboard(num, msg);
     });
 
     // Copy Address button
