@@ -155,7 +155,7 @@ window.WEDDING_CONFIG = {
     ],
     physicalGift: {
       recipient: "Dilah & Fadil",
-      phone: "0895-3204-63960",
+      phone: "+62 858-1158-9346",
       address: "Kediaman Mempelai Wanita, Kp. Cipayung Rt 02 / 05 Desa. Sukaharja, Kec. Ciomas Bogor"
     }
   },

@@ -679,9 +679,9 @@ body {
 }
 
 .btn-turut-toggle {
-  background: transparent;
-  color: var(--primary-color);
-  border: 1.5px solid var(--primary-color);
+  background: var(--primary-color);
+  color: #ffffff !important;
+  border: 1px solid var(--primary-color);
   padding: 0.45rem 1.4rem;
   border-radius: 30px;
   font-weight: 600;
@@ -692,11 +692,82 @@ body {
   margin-top: 1rem;
   cursor: pointer;
   transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(63, 94, 80, 0.2);
 }
 
 .btn-turut-toggle:hover {
-  background: var(--primary-color);
-  color: white;
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(41, 64, 54, 0.3);
+}
+
+.btn-turut-toggle i,
+.btn-turut-toggle span {
+  color: #ffffff !important;
+}
+
+/* Custom Theme Sage Buttons */
+.btn-sage,
+.btn-outline-sage {
+  background: var(--primary-color) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--primary-color) !important;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(63, 94, 80, 0.2);
+}
+
+.btn-sage:hover,
+.btn-sage:focus,
+.btn-sage:active,
+.btn-outline-sage:hover,
+.btn-outline-sage:focus,
+.btn-outline-sage:active {
+  background: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(41, 64, 54, 0.3);
+}
+
+.btn-sage i,
+.btn-sage span,
+.btn-outline-sage i,
+.btn-outline-sage span {
+  color: #ffffff !important;
+}
+
+/* Copy Account & Address Buttons */
+.btn-copy-account,
+#btn-copy-address {
+  background: var(--primary-color) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--primary-color) !important;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(63, 94, 80, 0.2);
+}
+
+.btn-copy-account:hover,
+.btn-copy-account:focus,
+#btn-copy-address:hover,
+#btn-copy-address:focus {
+  background: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(41, 64, 54, 0.3);
+}
+
+.btn-copy-account i,
+.btn-copy-account span,
+#btn-copy-address i,
+#btn-copy-address span {
+  color: #ffffff !important;
 }
 
 /* Gallery Grid */
