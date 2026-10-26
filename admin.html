@@ -436,42 +436,57 @@
 
     /* Mobile Bottom Sheet Styles (< 768px) */
     @media (max-width: 767.98px) {
-      #modalShareResult {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
+      #modalShareResult.modal {
+        padding: 0 !important;
+        overflow-x: hidden !important;
+        overflow-y: hidden !important;
       }
       #modalShareResult .modal-dialog {
-        margin: 0 !important;
-        max-width: 100% !important;
-        width: 100% !important;
         position: fixed !important;
         bottom: 0 !important;
         left: 0 !important;
         right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        display: block !important;
         transform: translateY(100%) !important;
-        transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      #modalShareResult .modal-dialog::before {
+        display: none !important;
+        height: 0 !important;
+        content: none !important;
       }
       #modalShareResult.show .modal-dialog {
         transform: translateY(0) !important;
       }
       #modalShareResult .modal-content {
+        width: 100% !important;
         border-radius: 24px 24px 0 0 !important;
-        border-bottom: none !important;
-        max-height: 85vh;
-        display: flex;
-        flex-direction: column;
-        padding-bottom: max(16px, env(safe-area-inset-bottom));
-        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+        border: none !important;
+        border-top: 1px solid rgba(74, 107, 93, 0.2) !important;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        margin: 0 !important;
+        max-height: 88vh !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding-bottom: max(20px, env(safe-area-inset-bottom)) !important;
+        box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.25) !important;
       }
       #modalShareResult .modal-body {
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior: contain !important;
+        padding-top: 4px !important;
       }
       .bottom-sheet-handle {
         width: 44px;
         height: 5px;
-        background-color: #cfd8dc;
+        background-color: #cbd5e1;
         border-radius: 10px;
         margin: 10px auto 4px auto;
         flex-shrink: 0;
