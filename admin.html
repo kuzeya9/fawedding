@@ -394,6 +394,96 @@
     .shake-anim {
       animation: shakePin 0.4s ease-in-out;
     }
+
+    /* ========================================================
+       MODAL SHARE RESULT: DESKTOP POPUP & MOBILE BOTTOM SHEET
+       ======================================================== */
+    #modalShareResult .modal-dialog {
+      max-width: 500px;
+    }
+    #modalShareResult .modal-content {
+      border: 1px solid var(--admin-sage-border);
+      border-radius: 20px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+      background: #ffffff;
+      overflow: hidden;
+    }
+    #modalShareResult .btn-sage {
+      background-color: var(--admin-sage) !important;
+      border-color: var(--admin-sage) !important;
+      color: #ffffff !important;
+    }
+    #modalShareResult .btn-sage:hover {
+      background-color: var(--admin-sage-dark) !important;
+      border-color: var(--admin-sage-dark) !important;
+      color: #ffffff !important;
+    }
+    .btn-whatsapp {
+      background-color: #25d366 !important;
+      border-color: #25d366 !important;
+      color: #ffffff !important;
+      box-shadow: 0 3px 10px rgba(37, 211, 102, 0.25);
+    }
+    .btn-whatsapp:hover, .btn-whatsapp:focus {
+      background-color: #1faa54 !important;
+      border-color: #1faa54 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+    }
+    .cursor-pointer {
+      cursor: pointer;
+    }
+
+    /* Mobile Bottom Sheet Styles (< 768px) */
+    @media (max-width: 767.98px) {
+      #modalShareResult {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      #modalShareResult .modal-dialog {
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        transform: translateY(100%) !important;
+        transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      #modalShareResult.show .modal-dialog {
+        transform: translateY(0) !important;
+      }
+      #modalShareResult .modal-content {
+        border-radius: 24px 24px 0 0 !important;
+        border-bottom: none !important;
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+      }
+      #modalShareResult .modal-body {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+      }
+      .bottom-sheet-handle {
+        width: 44px;
+        height: 5px;
+        background-color: #cfd8dc;
+        border-radius: 10px;
+        margin: 10px auto 4px auto;
+        flex-shrink: 0;
+        cursor: grab;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .bottom-sheet-handle {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -583,31 +673,31 @@
             <!-- Link Field -->
             <div class="input-group my-2">
               <input type="text" id="res-link" class="form-control form-control-sm bg-white" readonly>
-              <button class="btn btn-outline-secondary btn-sm" id="btn-copy-link" type="button" title="Salin Link">
-                <i class="fa-solid fa-copy"></i> Salin
+              <button class="btn btn-outline-secondary btn-sm px-3" id="btn-copy-link" type="button" title="Salin Link">
+                <i class="fa-solid fa-copy me-1"></i> Salin
               </button>
-              <a href="#" target="_blank" id="btn-preview-link" class="btn btn-sage btn-sm" title="Buka Undangan">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka
+              <a href="#" target="_blank" id="btn-preview-link" class="btn btn-sage btn-sm px-3 text-white" title="Buka Undangan">
+                <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Buka
               </a>
             </div>
 
             <!-- WhatsApp Message Preview -->
             <div class="mt-3">
               <label class="form-label small fw-bold text-muted mb-1">Format Pesan WhatsApp Resmi:</label>
-              <textarea id="res-wa-text" class="form-control form-control-sm bg-white" rows="5" readonly></textarea>
+              <textarea id="res-wa-text" class="form-control form-control-sm bg-white" rows="6" readonly style="font-size: 0.86rem; line-height: 1.5; resize: none;"></textarea>
             </div>
 
-            <div class="d-flex flex-wrap gap-2 mt-3">
-              <button id="btn-copy-wa" class="btn btn-outline-sage btn-sm flex-fill">
+            <div class="d-flex gap-2 mt-3 mb-2">
+              <button id="btn-copy-wa" type="button" class="btn btn-sage btn-sm py-2 px-3 text-white flex-fill fw-bold">
                 <i class="fa-solid fa-clipboard me-1"></i> Salin Pesan WA
               </button>
-              <a id="btn-send-wa" href="#" target="_blank" class="btn btn-success btn-sm flex-fill">
+              <a id="btn-send-wa" href="#" target="_blank" class="btn btn-whatsapp btn-sm py-2 px-3 text-white flex-fill fw-bold">
                 <i class="fa-brands fa-whatsapp me-1"></i> Kirim WhatsApp
               </a>
-              <button id="btn-mark-result-shared" class="btn btn-outline-secondary btn-sm">
-                <i class="fa-solid fa-check me-1"></i> Tandai Sudah Dikirim
-              </button>
             </div>
+            <button id="btn-mark-result-shared" type="button" class="btn btn-outline-secondary btn-sm w-100 py-2">
+              <i class="fa-solid fa-check me-1"></i> Tandai Sudah Dikirim
+            </button>
           </div>
 
         </div>
@@ -718,6 +808,62 @@
     </div>
   </div>
   </div><!-- /#admin-main-content -->
+
+  <!-- Modal / Bottom Sheet: Pratinjau Link & WhatsApp Siap Dibagikan -->
+  <div class="modal fade" id="modalShareResult" tabindex="-1" aria-labelledby="modalShareResultLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content admin-card border-0">
+        <!-- Bottom Sheet Drag Handle (Mobile only) -->
+        <div class="bottom-sheet-handle" title="Tarik ke bawah untuk menutup"></div>
+
+        <div class="modal-header border-0 pb-1 pt-3 px-3 px-md-4 d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-success px-2 py-1" style="font-size: 0.8rem;">
+              <i class="fa-solid fa-circle-check me-1"></i> Link Siap Dibagikan
+            </span>
+            <small class="text-muted" id="modal-res-timestamp">Baru saja dibuat</small>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+
+        <div class="modal-body px-3 px-md-4 pt-1 pb-4">
+          <!-- Guest Name -->
+          <h5 class="fw-bold text-dark mb-3" id="modal-res-name" style="font-size: 1.25rem;">Nama Tamu</h5>
+
+          <!-- Link Input Bar -->
+          <div class="input-group mb-3">
+            <input type="text" id="modal-res-link" class="form-control form-control-sm bg-white" readonly>
+            <button class="btn btn-outline-secondary btn-sm px-3" id="modal-btn-copy-link" type="button" title="Salin Link">
+              <i class="fa-solid fa-copy me-1"></i> Salin
+            </button>
+            <a href="#" target="_blank" id="modal-btn-preview-link" class="btn btn-sage btn-sm px-3 text-white" title="Buka Undangan">
+              <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Buka
+            </a>
+          </div>
+
+          <!-- WhatsApp Message Format Preview -->
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-muted mb-1">Format Pesan WhatsApp Resmi:</label>
+            <textarea id="modal-res-wa-text" class="form-control form-control-sm bg-white" rows="6" readonly style="font-size: 0.86rem; line-height: 1.5; resize: none;"></textarea>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-flex gap-2 mb-2">
+            <button id="modal-btn-copy-wa" type="button" class="btn btn-sage btn-sm py-2 px-3 text-white flex-fill fw-bold">
+              <i class="fa-solid fa-clipboard me-1"></i> Salin Pesan WA
+            </button>
+            <a id="modal-btn-send-wa" href="#" target="_blank" class="btn btn-whatsapp btn-sm py-2 px-3 text-white flex-fill fw-bold">
+              <i class="fa-brands fa-whatsapp me-1"></i> Kirim WhatsApp
+            </a>
+          </div>
+
+          <button id="modal-btn-mark-shared" type="button" class="btn btn-outline-secondary btn-sm w-100 py-2">
+            <i class="fa-solid fa-check me-1"></i> Tandai Sudah Dikirim
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal Ubah PIN -->
   <div class="modal fade" id="modalChangePin" tabindex="-1" aria-hidden="true">
@@ -982,6 +1128,35 @@
         return `Assalamu'alaikum Warahmatullahi Wabarakatuh\n\nKepada Yth. ${salutation}:\n*${name}*\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i sekalian untuk menghadiri hari bahagia pernikahan kami:\n\n*${brideShort} & ${groomShort}*\n(Siti Padilah & Fadilah)\n\n🗓 *Minggu, 1 November 2026*\n⏰ *Akad:* 09.00 WIB | *Resepsi:* 10.00 WIB - Selesai\n📍 *Lokasi:* Kediaman Mempelai Wanita, Kp. Cipayung Rt 02 / 05 Desa. Sukaharja, Kec. Ciomas Bogor\n\nUntuk informasi selengkapnya mengenai detail acara, panduan lokasi, serta konfirmasi kehadiran (RSVP), silakan buka tautan undangan digital berikut:\n${link}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir serta memberikan doa restu bagi kami berdua.\n\nAtas perhatian dan doa restunya, kami ucapkan terima kasih yang sebesar-besarnya.\nWassalamu'alaikum Warahmatullahi Wabarakatuh\n\nSalam hangat dari kami,\n*${brideShort} & ${groomShort}*`;
       }
 
+      function openShareResultModal(data) {
+        currentGeneratedId = data.id;
+
+        $('#modal-res-name').text(data.name);
+        $('#modal-res-link').val(data.link);
+        $('#modal-btn-preview-link').attr('href', data.link);
+        $('#modal-res-wa-text').val(data.waText);
+        $('#modal-btn-send-wa').attr('href', data.waUrl);
+        $('#modal-res-timestamp').text(data.timestamp || 'Baru saja dibuat');
+
+        if (data.isShared) {
+          $('#modal-btn-mark-shared')
+            .html('<i class="fa-solid fa-circle-check me-1"></i> Sudah Ditandai Dibagikan')
+            .removeClass('btn-outline-secondary')
+            .addClass('btn-success');
+        } else {
+          $('#modal-btn-mark-shared')
+            .html('<i class="fa-solid fa-check me-1"></i> Tandai Sudah Dikirim')
+            .removeClass('btn-success')
+            .addClass('btn-outline-secondary');
+        }
+
+        const modalEl = document.getElementById('modalShareResult');
+        if (modalEl) {
+          const modalInstance = bootstrap.Modal.getOrCreateInstance(modalEl);
+          modalInstance.show();
+        }
+      }
+
       function escapeHtml(text) {
         if (!text) return '';
         return text.toString().replace(/[&<>"']/g, m => ({
@@ -1082,7 +1257,9 @@
             <tr>
               <td class="text-muted small">${index + 1}</td>
               <td>
-                <div class="fw-bold text-dark">${escapeHtml(g.name)}</div>
+                <div class="fw-bold text-dark btn-open-share-modal cursor-pointer" data-id="${g.id}" title="Lihat & Bagikan Undangan">
+                  ${escapeHtml(g.name)} <i class="fa-solid fa-arrow-up-right-from-square text-muted opacity-50 ms-1" style="font-size: 0.72rem;"></i>
+                </div>
                 <small class="text-muted">${escapeHtml(g.salutation || 'Bapak/Ibu/Saudara/i')}${g.phone ? ' • <i class="fa-solid fa-phone"></i> ' + escapeHtml(g.phone) : ''}</small>
               </td>
               <td class="text-center">
@@ -1090,6 +1267,9 @@
               </td>
               <td class="text-end">
                 <div class="btn-group btn-group-sm">
+                  <button class="btn btn-outline-sage btn-open-share-modal" data-id="${g.id}" title="Buka Pratinjau Link &amp; WhatsApp">
+                    <i class="fa-solid fa-share-nodes"></i>
+                  </button>
                   <button class="btn btn-outline-secondary btn-copy-row-link" data-link="${escapeHtml(link)}" title="Salin Link Undangan">
                     <i class="fa-solid fa-link"></i>
                   </button>
@@ -1117,7 +1297,9 @@
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <div class="d-flex align-items-center gap-2">
                   <span class="badge bg-light text-muted border">#${index + 1}</span>
-                  <h6 class="fw-bold mb-0 text-dark" style="font-size: 1rem;">${escapeHtml(g.name)}</h6>
+                  <h6 class="fw-bold mb-0 text-dark btn-open-share-modal cursor-pointer" data-id="${g.id}" style="font-size: 1rem;" title="Lihat &amp; Bagikan Undangan">
+                    ${escapeHtml(g.name)} <i class="fa-solid fa-arrow-up-right-from-square text-muted opacity-50 ms-1" style="font-size: 0.72rem;"></i>
+                  </h6>
                 </div>
                 ${statusBtn}
               </div>
@@ -1128,6 +1310,9 @@
               </div>
 
               <div class="d-flex justify-content-end align-items-center gap-2 pt-2 border-top">
+                <button class="btn btn-outline-sage btn-sm btn-action-icon btn-open-share-modal" data-id="${g.id}" title="Buka Pratinjau Link &amp; WhatsApp">
+                  <i class="fa-solid fa-share-nodes"></i>
+                </button>
                 <button class="btn btn-outline-secondary btn-sm btn-action-icon btn-copy-row-link" data-link="${escapeHtml(link)}" title="Salin Link Undangan">
                   <i class="fa-solid fa-link"></i>
                 </button>
@@ -1471,8 +1656,162 @@
           // Auto Copy link for instant sharing convenience
           copyText(link, `Link untuk ${name} berhasil dibuat & disalin!`);
 
+          // Open Bottom Sheet (Mobile) / Popup (Desktop)
+          openShareResultModal({
+            id: newId,
+            name: name,
+            salutation: salutation,
+            phone: phone,
+            isShared: false,
+            link: link,
+            waText: waText,
+            waUrl: waUrl,
+            timestamp: 'Baru saja dibuat'
+          });
+
           $('#guest-name').val('').focus();
           $('#guest-phone').val('');
+        });
+
+        // Modal / Bottom Sheet Copy & Action Handlers
+        $('#modal-btn-copy-link').on('click', function() {
+          copyText($('#modal-res-link').val(), 'Link undangan berhasil disalin!');
+        });
+
+        $('#modal-btn-copy-wa').on('click', function() {
+          copyText($('#modal-res-wa-text').val(), 'Format pesan WhatsApp berhasil disalin!');
+        });
+
+        $('#modal-btn-send-wa').on('click', function() {
+          if (currentGeneratedId) {
+            const guest = guests.find(g => g.id.toString() === currentGeneratedId.toString());
+            if (guest && !guest.isShared) {
+              guest.isShared = true;
+              saveGuests();
+              renderTable();
+              $('#modal-btn-mark-shared')
+                .html('<i class="fa-solid fa-circle-check me-1"></i> Sudah Ditandai Dibagikan')
+                .removeClass('btn-outline-secondary')
+                .addClass('btn-success');
+              $('#btn-mark-result-shared')
+                .html('<i class="fa-solid fa-circle-check me-1"></i> Sudah Ditandai Dibagikan')
+                .removeClass('btn-outline-secondary')
+                .addClass('btn-success');
+            }
+          }
+        });
+
+        $('#modal-btn-mark-shared').on('click', function() {
+          if (!currentGeneratedId) return;
+          const guest = guests.find(g => g.id.toString() === currentGeneratedId.toString());
+          if (guest) {
+            guest.isShared = !guest.isShared;
+            saveGuests();
+            renderTable();
+            if (guest.isShared) {
+              $(this)
+                .html('<i class="fa-solid fa-circle-check me-1"></i> Sudah Ditandai Dibagikan')
+                .removeClass('btn-outline-secondary')
+                .addClass('btn-success');
+              $('#btn-mark-result-shared')
+                .html('<i class="fa-solid fa-circle-check me-1"></i> Sudah Ditandai Dibagikan')
+                .removeClass('btn-outline-secondary')
+                .addClass('btn-success');
+              iziToast.success({
+                title: 'Selesai',
+                message: `Undangan untuk ${guest.name} ditandai sudah dibagikan.`,
+                position: window.innerWidth < 768 ? 'topCenter' : 'bottomRight'
+              });
+            } else {
+              $(this)
+                .html('<i class="fa-solid fa-check me-1"></i> Tandai Sudah Dikirim')
+                .removeClass('btn-success')
+                .addClass('btn-outline-secondary');
+              $('#btn-mark-result-shared')
+                .html('<i class="fa-solid fa-check me-1"></i> Tandai Sudah Dikirim')
+                .removeClass('btn-success')
+                .addClass('btn-outline-secondary');
+            }
+          }
+        });
+
+        // Open Modal from Table / Card Click
+        $(document).on('click', '.btn-open-share-modal', function() {
+          const id = $(this).data('id').toString();
+          const guest = guests.find(g => g.id.toString() === id);
+          if (guest) {
+            const link = makeGuestLink(guest.name);
+            const waText = makeWaText(guest.salutation || 'Bapak/Ibu/Saudara/i', guest.name);
+            let cleanPhone = (guest.phone || '').replace(/\D/g, '');
+            if (cleanPhone.startsWith('0')) cleanPhone = '62' + cleanPhone.substring(1);
+            const waUrl = cleanPhone 
+              ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(waText)}`
+              : `https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`;
+
+            // Also sync in-page result box
+            $('#res-name').text(guest.name);
+            $('#res-link').val(link);
+            $('#btn-preview-link').attr('href', link);
+            $('#res-wa-text').val(waText);
+            $('#btn-send-wa').attr('href', waUrl);
+            $('#res-timestamp').text(guest.createdAt ? new Date(guest.createdAt).toLocaleDateString('id-ID') : 'Tersimpan');
+            if (guest.isShared) {
+              $('#btn-mark-result-shared').html('<i class="fa-solid fa-circle-check me-1"></i> Sudah Ditandai Dibagikan').removeClass('btn-outline-secondary').addClass('btn-success');
+            } else {
+              $('#btn-mark-result-shared').html('<i class="fa-solid fa-check me-1"></i> Tandai Sudah Dikirim').removeClass('btn-success').addClass('btn-outline-secondary');
+            }
+            $('#result-container').removeClass('d-none');
+
+            openShareResultModal({
+              id: guest.id,
+              name: guest.name,
+              salutation: guest.salutation,
+              phone: guest.phone,
+              isShared: guest.isShared,
+              link: link,
+              waText: waText,
+              waUrl: waUrl,
+              timestamp: guest.createdAt ? new Date(guest.createdAt).toLocaleDateString('id-ID') : 'Tersimpan'
+            });
+          }
+        });
+
+        // Swipe down gesture to dismiss Bottom Sheet on mobile
+        let touchStartY = 0;
+        let touchDiffY = 0;
+        const modalDialogEl = document.querySelector('#modalShareResult .modal-dialog');
+
+        $('#modalShareResult .bottom-sheet-handle, #modalShareResult .modal-header').on('touchstart', function(e) {
+          if (window.innerWidth >= 768) return;
+          touchStartY = e.originalEvent.touches[0].clientY;
+          touchDiffY = 0;
+        });
+
+        $('#modalShareResult .bottom-sheet-handle, #modalShareResult .modal-header').on('touchmove', function(e) {
+          if (window.innerWidth >= 768) return;
+          const currentY = e.originalEvent.touches[0].clientY;
+          touchDiffY = currentY - touchStartY;
+          if (touchDiffY > 0 && modalDialogEl) {
+            modalDialogEl.style.transform = `translateY(${touchDiffY}px)`;
+          }
+        });
+
+        $('#modalShareResult .bottom-sheet-handle, #modalShareResult .modal-header').on('touchend', function() {
+          if (window.innerWidth >= 768) return;
+          if (touchDiffY > 75) {
+            const modalInstance = bootstrap.Modal.getInstance(document.getElementById('modalShareResult'));
+            if (modalInstance) modalInstance.hide();
+          }
+          if (modalDialogEl) {
+            modalDialogEl.style.transform = '';
+          }
+          touchDiffY = 0;
+        });
+
+        $('#modalShareResult').on('hidden.bs.modal', function() {
+          if (modalDialogEl) {
+            modalDialogEl.style.transform = '';
+          }
         });
 
         // Toggle Status in Table
