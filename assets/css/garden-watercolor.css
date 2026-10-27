@@ -980,3 +980,101 @@ body {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ========================================================
+   LANGUAGE SWITCHER PILL & JAPANESE TYPOGRAPHY
+   ======================================================== */
+.lang-switcher-pill {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1060;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid rgba(63, 94, 80, 0.25);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+.lang-switcher-pill:hover {
+  box-shadow: 0 6px 24px rgba(63, 94, 80, 0.22);
+  border-color: rgba(63, 94, 80, 0.45);
+}
+.lang-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.lang-opt-btn {
+  border: 2px solid transparent;
+  background: transparent;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.52;
+  filter: grayscale(0.25);
+}
+.lang-opt-btn:hover {
+  opacity: 1;
+  filter: none;
+  transform: scale(1.08);
+}
+.lang-opt-btn.active {
+  opacity: 1;
+  filter: none;
+  border-color: var(--primary-color);
+  background: rgba(63, 94, 80, 0.12);
+  box-shadow: 0 2px 8px rgba(63, 94, 80, 0.32);
+  transform: scale(1.06);
+}
+.flag-icon-svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+@media (max-width: 480px) {
+  .lang-switcher-pill {
+    top: 12px;
+    right: 12px;
+    padding: 3px;
+  }
+  .lang-opt-btn {
+    width: 28px;
+    height: 28px;
+  }
+  .flag-icon-svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Japanese Typography Enhancements */
+body.lang-jp {
+  font-family: 'Nunito Sans', "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif;
+  letter-spacing: 0.02em;
+}
+body.lang-jp .section-heading-serif,
+body.lang-jp .sidebar-title,
+body.lang-jp .mobile-hero-title,
+body.lang-jp .event-title {
+  font-family: 'Prata', "Yu Mincho", "Hiragino Mincho ProN", "MS PMincho", "Noto Serif JP", serif;
+  font-weight: 600;
+}
+body.lang-jp .section-heading-script {
+  font-size: 1.85rem;
+  letter-spacing: 0.06em;
+}
+

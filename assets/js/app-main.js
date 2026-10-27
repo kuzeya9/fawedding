@@ -271,28 +271,37 @@
     $('.btn-copy-account').on('click', function() {
       const num = $(this).data('number');
       const bank = $(this).data('bank') || 'rekening';
-      const msg = bank === 'DANA' ? 'Nomor DANA berhasil disalin!' : `Nomor rekening ${bank} berhasil disalin!`;
+      let msg = bank === 'DANA' ? 'Nomor DANA berhasil disalin!' : `Nomor rekening ${bank} berhasil disalin!`;
+      if (window.FaweddingI18n) {
+        msg = bank === 'DANA' 
+          ? window.FaweddingI18n.getTranslation('toast_dana_copied') 
+          : window.FaweddingI18n.getTranslation('toast_rekening_copied');
+      }
       copyTextToClipboard(num, msg);
     });
 
     // Copy Address button
     $('#btn-copy-address').on('click', function() {
       const addr = $(this).data('address');
-      copyTextToClipboard(addr, 'Alamat pengiriman kado berhasil disalin!');
+      const msg = (window.FaweddingI18n && window.FaweddingI18n.getTranslation('toast_address_copied')) 
+        || 'Alamat pengiriman kado berhasil disalin!';
+      copyTextToClipboard(addr, msg);
     });
 
     // Toggle Turut Mengundang Accordion
     $('#btn-toggle-turut').on('click', function() {
       const $wrap = $('#turut-expandable-wrap');
       const isExpanded = $wrap.hasClass('expanded');
+      const moreText = (window.FaweddingI18n && window.FaweddingI18n.getTranslation('btn_turut_more')) || 'Lihat Selengkapnya';
+      const lessText = (window.FaweddingI18n && window.FaweddingI18n.getTranslation('btn_turut_less')) || 'Sembunyikan';
 
       if (isExpanded) {
         $wrap.removeClass('expanded');
-        $('#turut-toggle-text').text('Lihat Selengkapnya');
+        $('#turut-toggle-text').text(moreText);
         $('#turut-toggle-icon').removeClass('fa-chevron-up').addClass('fa-chevron-down');
       } else {
         $wrap.addClass('expanded');
-        $('#turut-toggle-text').text('Sembunyikan');
+        $('#turut-toggle-text').text(lessText);
         $('#turut-toggle-icon').removeClass('fa-chevron-down').addClass('fa-chevron-up');
       }
     });
@@ -346,21 +355,31 @@
         renderWishesList();
       }
 
+      const isJp = window.FaweddingI18n && window.FaweddingI18n.currentLang === 'jp';
+      const successTitle = isJp ? '出欠の送信が完了しました' : 'Konfirmasi Kehadiran Berhasil';
+      const successMsg = isJp
+        ? `<strong>${escapeHtml(name)}</strong> 様、ご出欠のご連絡をいただき誠にありがとうございます。（${status} &bull; ${guestCount}名様）`
+        : `Terima kasih <strong>${escapeHtml(name)}</strong> telah mengonfirmasi kehadiran Anda (${status} &bull; ${guestCount} Orang).`;
+      const toastMsg = isJp
+        ? 'ご出欠のご連絡を承りました。誠にありがとうございます。'
+        : 'Terima kasih atas konfirmasi kehadiran Anda.';
+      const toastTitle = isJp ? '送信完了' : 'Konfirmasi Diterima';
+
       $('#rsvp-form-container').html(`
         <div class="text-center py-4">
           <div class="text-success mb-3" style="font-size: 3.2rem;">
             <i class="fa-solid fa-circle-check"></i>
           </div>
-          <h5 class="fw-bold mb-2">Konfirmasi Kehadiran Berhasil</h5>
-          <p class="text-muted mb-0">Terima kasih <strong>${escapeHtml(name)}</strong> telah mengonfirmasi kehadiran Anda (${status} &bull; ${guestCount} Orang).</p>
+          <h5 class="fw-bold mb-2">${successTitle}</h5>
+          <p class="text-muted mb-0">${successMsg}</p>
         </div>
       `);
 
       if (window.iziToast) {
         iziToast.success({
-          title: 'Konfirmasi Diterima',
-          message: 'Terima kasih atas konfirmasi kehadiran Anda.',
-          position: 'bottomRight'
+          title: toastTitle,
+          message: toastMsg,
+          position: window.innerWidth < 768 ? 'topCenter' : 'bottomRight'
         });
       }
     });
@@ -372,12 +391,14 @@
       const message = $('#wish-message').val().trim();
       const presence = $('#wish-presence').val() || 'Hadir';
 
+      const isJp = window.FaweddingI18n && window.FaweddingI18n.currentLang === 'jp';
+
       if (!name || !message) {
         if (window.iziToast) {
           iziToast.warning({
-            title: 'Perhatian',
-            message: 'Mohon isi nama dan ucapan Anda.',
-            position: 'bottomRight'
+            title: isJp ? 'ご注意' : 'Perhatian',
+            message: isJp ? 'お名前とお祝いメッセージをご入力ください。' : 'Mohon isi nama dan ucapan Anda.',
+            position: window.innerWidth < 768 ? 'topCenter' : 'bottomRight'
           });
         }
         return;
@@ -404,9 +425,9 @@
 
       if (window.iziToast) {
         iziToast.success({
-          title: 'Terkirim',
-          message: 'Terima kasih atas doa dan ucapan hangat Anda!',
-          position: 'bottomRight'
+          title: isJp ? '送信完了' : 'Terkirim',
+          message: (window.FaweddingI18n && window.FaweddingI18n.getTranslation('toast_wish_sent')) || 'Terima kasih atas doa dan ucapan hangat Anda!',
+          position: window.innerWidth < 768 ? 'topCenter' : 'bottomRight'
         });
       }
     });

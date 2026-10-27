@@ -683,7 +683,17 @@
               <small class="text-muted" id="res-timestamp">Baru saja dibuat</small>
             </div>
             
-            <h6 class="fw-bold mb-1 text-dark" id="res-name">Nama Tamu</h6>
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+              <h6 class="fw-bold mb-0 text-dark" id="res-name">Nama Tamu</h6>
+              <div class="btn-group btn-group-sm" role="group" id="res-lang-toggle" aria-label="Pilih Bahasa">
+                <button type="button" class="btn btn-sage text-white active res-lang-btn" data-lang="id" title="Versi Bahasa Indonesia">
+                  🇮🇩 ID
+                </button>
+                <button type="button" class="btn btn-outline-sage res-lang-btn" data-lang="jp" title="Versi Bahasa Jepang">
+                  🇯🇵 JP
+                </button>
+              </div>
+            </div>
             
             <!-- Link Field -->
             <div class="input-group my-2">
@@ -842,8 +852,24 @@
         </div>
 
         <div class="modal-body px-3 px-md-4 pt-1 pb-4">
-          <!-- Guest Name -->
-          <h5 class="fw-bold text-dark mb-3" id="modal-res-name" style="font-size: 1.25rem;">Nama Tamu</h5>
+          <!-- Guest Name & Language Switcher -->
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 pb-2 border-bottom">
+            <div>
+              <small class="text-muted d-block" style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px;">Tamu Undangan</small>
+              <h5 class="fw-bold text-dark mb-0" id="modal-res-name" style="font-size: 1.2rem;">Nama Tamu</h5>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <small class="text-muted d-none d-sm-inline" style="font-size: 0.78rem;">Bahasa:</small>
+              <div class="btn-group btn-group-sm" role="group" id="modal-lang-toggle" aria-label="Pilih Bahasa Link & Pesan">
+                <button type="button" class="btn btn-sage text-white active modal-lang-btn" data-lang="id" title="Versi Bahasa Indonesia">
+                  🇮🇩 Indonesia
+                </button>
+                <button type="button" class="btn btn-outline-sage modal-lang-btn" data-lang="jp" title="Versi Bahasa Jepang">
+                  🇯🇵 日本語
+                </button>
+              </div>
+            </div>
+          </div>
 
           <!-- Link Input Bar -->
           <div class="input-group mb-3">
@@ -1130,12 +1156,23 @@
         return window.location.origin;
       }
 
-      function makeGuestLink(name) {
-        return `${getBaseUrl()}/?to=${encodeURIComponent(name)}`;
+      function makeGuestLink(name, lang = 'id') {
+        const base = `${getBaseUrl()}/?to=${encodeURIComponent(name)}`;
+        return lang === 'jp' ? `${base}&lang=jp` : base;
       }
 
-      function makeWaText(salutation, name) {
-        const link = makeGuestLink(name);
+      function makeWaTextJp(name) {
+        const link = makeGuestLink(name, 'jp');
+        const formattedGuest = name.endsWith('様') ? name : `${name} 様`;
+
+        return `【結婚式のご案内】\nディラ ＆ ファディル（Dilah & Fadil）\n\n拝啓\n\n皆様におかれましては益々ご清栄のこととお慶び申し上げます。\nこのたび 私たちふたりは結婚式を執り行うこととなりました。\n\n日頃より温かいご厚情を賜っております皆様に、ぜひご臨席賜りたく、心よりご案内申し上げます。\n\n■ ご招待者様：\n*${formattedGuest}*\n\n■ 日時：2026年11月1日（日曜日）\n⏰ 挙式：午前09:00 WIB（インドネシア西部時間）\n⏰ 披露宴：午前10:00 WIB 〜\n📍 場所：新婦実家（ボゴール・チオマス）\nKp. Cipayung Rt 02 / 05 Desa Sukaharja, Kec. Ciomas, Bogor\n\n▼ 下記のリンクより、日本語版Web招待状および詳細をご確認いただけます：\n${link}\n\nお手数をおかけいたしますが、Web招待状内のフォームより出欠をお知らせいただけますと幸いに存じます。\n\n皆様とお祝いのひとときを共にできますことを、心より楽しみにしております。\n\n敬具\n*ディラ ＆ ファディル（Dilah & Fadil）*`;
+      }
+
+      function makeWaText(salutation, name, lang = 'id') {
+        if (lang === 'jp') {
+          return makeWaTextJp(name);
+        }
+        const link = makeGuestLink(name, 'id');
         const config = window.WEDDING_CONFIG || {};
         const brideShort = (config.couple && config.couple.shortBride) || 'Dilah';
         const groomShort = (config.couple && config.couple.shortGroom) || 'Fadil';
@@ -1143,15 +1180,64 @@
         return `Assalamu'alaikum Warahmatullahi Wabarakatuh\n\nKepada Yth. ${salutation}:\n*${name}*\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i sekalian untuk menghadiri hari bahagia pernikahan kami:\n\n*${brideShort} & ${groomShort}*\n(Siti Padilah & Fadilah)\n\n🗓 *Minggu, 1 November 2026*\n⏰ *Akad:* 09.00 WIB | *Resepsi:* 10.00 WIB - Selesai\n📍 *Lokasi:* Kediaman Mempelai Wanita, Kp. Cipayung Rt 02 / 05 Desa. Sukaharja, Kec. Ciomas Bogor\n\nUntuk informasi selengkapnya mengenai detail acara, panduan lokasi, serta konfirmasi kehadiran (RSVP), silakan buka tautan undangan digital berikut:\n${link}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir serta memberikan doa restu bagi kami berdua.\n\nAtas perhatian dan doa restunya, kami ucapkan terima kasih yang sebesar-besarnya.\nWassalamu'alaikum Warahmatullahi Wabarakatuh\n\nSalam hangat dari kami,\n*${brideShort} & ${groomShort}*`;
       }
 
-      function openShareResultModal(data) {
-        currentGeneratedId = data.id;
+      let currentModalData = null;
+      let currentModalLang = 'id';
+      let currentResultData = null;
+      let currentResultLang = 'id';
 
-        $('#modal-res-name').text(data.name);
-        $('#modal-res-link').val(data.link);
-        $('#modal-btn-preview-link').attr('href', data.link);
-        $('#modal-res-wa-text').val(data.waText);
-        $('#modal-btn-send-wa').attr('href', data.waUrl);
+      function updateModalView() {
+        if (!currentModalData) return;
+        const g = currentModalData;
+        const lang = currentModalLang;
+        const link = makeGuestLink(g.name, lang);
+        const waText = makeWaText(g.salutation || 'Bapak/Ibu/Saudara/i', g.name, lang);
+
+        let cleanPhone = (g.phone || '').replace(/\D/g, '');
+        if (cleanPhone.startsWith('0')) cleanPhone = '62' + cleanPhone.substring(1);
+        const waUrl = cleanPhone 
+          ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(waText)}`
+          : `https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`;
+
+        $('#modal-res-name').text(lang === 'jp' ? (g.name.endsWith('様') ? g.name : `${g.name} 様`) : g.name);
+        $('#modal-res-link').val(link);
+        $('#modal-btn-preview-link').attr('href', link);
+        $('#modal-res-wa-text').val(waText);
+        $('#modal-btn-send-wa').attr('href', waUrl);
+
+        $('.modal-lang-btn').removeClass('active btn-sage text-white').addClass('btn-outline-sage');
+        $(`.modal-lang-btn[data-lang="${lang}"]`).removeClass('btn-outline-sage').addClass('active btn-sage text-white');
+      }
+
+      function updateResultView() {
+        if (!currentResultData) return;
+        const g = currentResultData;
+        const lang = currentResultLang;
+        const link = makeGuestLink(g.name, lang);
+        const waText = makeWaText(g.salutation || 'Bapak/Ibu/Saudara/i', g.name, lang);
+
+        let cleanPhone = (g.phone || '').replace(/\D/g, '');
+        if (cleanPhone.startsWith('0')) cleanPhone = '62' + cleanPhone.substring(1);
+        const waUrl = cleanPhone 
+          ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(waText)}`
+          : `https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`;
+
+        $('#res-name').text(lang === 'jp' ? (g.name.endsWith('様') ? g.name : `${g.name} 様`) : g.name);
+        $('#res-link').val(link);
+        $('#btn-preview-link').attr('href', link);
+        $('#res-wa-text').val(waText);
+        $('#btn-send-wa').attr('href', waUrl);
+
+        $('.res-lang-btn').removeClass('active btn-sage text-white').addClass('btn-outline-sage');
+        $(`.res-lang-btn[data-lang="${lang}"]`).removeClass('btn-outline-sage').addClass('active btn-sage text-white');
+      }
+
+      function openShareResultModal(data, preferredLang = 'id') {
+        currentGeneratedId = data.id;
+        currentModalData = data;
+        currentModalLang = preferredLang;
         $('#modal-res-timestamp').text(data.timestamp || 'Baru saja dibuat');
+
+        updateModalView();
 
         if (data.isShared) {
           $('#modal-btn-mark-shared')
@@ -1651,24 +1737,15 @@
           renderTable();
 
           // Fill Result Box
-          const link = makeGuestLink(name);
-          const waText = makeWaText(salutation, name);
-          let cleanPhone = phone.replace(/\D/g, '');
-          if (cleanPhone.startsWith('0')) cleanPhone = '62' + cleanPhone.substring(1);
-          const waUrl = cleanPhone 
-            ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(waText)}`
-            : `https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`;
-
-          $('#res-name').text(name);
-          $('#res-link').val(link);
-          $('#btn-preview-link').attr('href', link);
-          $('#res-wa-text').val(waText);
-          $('#btn-send-wa').attr('href', waUrl);
+          currentResultData = newGuest;
+          currentResultLang = 'id';
+          updateResultView();
           $('#res-timestamp').text('Baru saja dibuat');
           $('#btn-mark-result-shared').html('<i class="fa-solid fa-check me-1"></i> Tandai Sudah Dikirim').removeClass('btn-success').addClass('btn-outline-secondary');
           $('#result-container').removeClass('d-none');
 
           // Auto Copy link for instant sharing convenience
+          const link = makeGuestLink(name, 'id');
           copyText(link, `Link untuk ${name} berhasil dibuat & disalin!`);
 
           // Open Bottom Sheet (Mobile) / Popup (Desktop)
@@ -1678,14 +1755,43 @@
             salutation: salutation,
             phone: phone,
             isShared: false,
-            link: link,
-            waText: waText,
-            waUrl: waUrl,
             timestamp: 'Baru saja dibuat'
-          });
+          }, 'id');
 
           $('#guest-name').val('').focus();
           $('#guest-phone').val('');
+        });
+
+        // Language Switcher in Modal / Bottom Sheet
+        $(document).on('click', '.modal-lang-btn', function() {
+          const lang = $(this).data('lang');
+          if (lang !== currentModalLang) {
+            currentModalLang = lang;
+            updateModalView();
+            iziToast.info({
+              title: lang === 'jp' ? 'Bahasa Jepang' : 'Bahasa Indonesia',
+              message: lang === 'jp' 
+                ? 'Link dan format pesan WhatsApp diubah ke versi Bahasa Jepang.'
+                : 'Link dan format pesan WhatsApp diubah ke versi Bahasa Indonesia.',
+              position: window.innerWidth < 768 ? 'topCenter' : 'bottomRight'
+            });
+          }
+        });
+
+        // Language Switcher in Result Box
+        $(document).on('click', '.res-lang-btn', function() {
+          const lang = $(this).data('lang');
+          if (lang !== currentResultLang) {
+            currentResultLang = lang;
+            updateResultView();
+            iziToast.info({
+              title: lang === 'jp' ? 'Bahasa Jepang' : 'Bahasa Indonesia',
+              message: lang === 'jp' 
+                ? 'Link dan format pesan WhatsApp diubah ke versi Bahasa Jepang.'
+                : 'Link dan format pesan WhatsApp diubah ke versi Bahasa Indonesia.',
+              position: window.innerWidth < 768 ? 'topCenter' : 'bottomRight'
+            });
+          }
         });
 
         // Modal / Bottom Sheet Copy & Action Handlers
@@ -1755,20 +1861,10 @@
           const id = $(this).data('id').toString();
           const guest = guests.find(g => g.id.toString() === id);
           if (guest) {
-            const link = makeGuestLink(guest.name);
-            const waText = makeWaText(guest.salutation || 'Bapak/Ibu/Saudara/i', guest.name);
-            let cleanPhone = (guest.phone || '').replace(/\D/g, '');
-            if (cleanPhone.startsWith('0')) cleanPhone = '62' + cleanPhone.substring(1);
-            const waUrl = cleanPhone 
-              ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(waText)}`
-              : `https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`;
-
-            // Also sync in-page result box
-            $('#res-name').text(guest.name);
-            $('#res-link').val(link);
-            $('#btn-preview-link').attr('href', link);
-            $('#res-wa-text').val(waText);
-            $('#btn-send-wa').attr('href', waUrl);
+            currentGeneratedId = guest.id;
+            currentResultData = guest;
+            currentResultLang = 'id';
+            updateResultView();
             $('#res-timestamp').text(guest.createdAt ? new Date(guest.createdAt).toLocaleDateString('id-ID') : 'Tersimpan');
             if (guest.isShared) {
               $('#btn-mark-result-shared').html('<i class="fa-solid fa-circle-check me-1"></i> Sudah Ditandai Dibagikan').removeClass('btn-outline-secondary').addClass('btn-success');
@@ -1783,11 +1879,8 @@
               salutation: guest.salutation,
               phone: guest.phone,
               isShared: guest.isShared,
-              link: link,
-              waText: waText,
-              waUrl: waUrl,
               timestamp: guest.createdAt ? new Date(guest.createdAt).toLocaleDateString('id-ID') : 'Tersimpan'
-            });
+            }, 'id');
           }
         });
 
