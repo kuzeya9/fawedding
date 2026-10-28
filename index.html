@@ -43,9 +43,10 @@
 
   <!-- Audio Element -->
   <audio id="wedding-audio" loop preload="auto">
-    <source src="./assets/audio/wedding_bgm.mp3" type="audio/mpeg">
+    <source id="wedding-audio-source" src="./assets/audio/wedding_bgm.mp3" type="audio/mpeg">
     Browser Anda tidak mendukung audio player.
   </audio>
+  <link rel="preload" href="./assets/audio/wedding_bgm_jp.mp3" as="fetch" crossorigin="anonymous">
 
   <!-- Floating Audio Button -->
   <div id="floating-music-btn" class="floating-music-btn d-none" title="Putar / Jeda Musik">

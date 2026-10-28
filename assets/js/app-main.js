@@ -222,6 +222,83 @@
     const audio = document.getElementById('wedding-audio');
     let isPlaying = false;
 
+    const AUDIO_TRACKS = {
+      id: './assets/audio/wedding_bgm.mp3',
+      jp: './assets/audio/wedding_bgm_jp.mp3'
+    };
+
+    let audioSwitchTimer = null;
+
+    function updateAudioTrack(targetLang, forcePlay = false) {
+      if (!audio) return;
+      const targetSrc = AUDIO_TRACKS[targetLang] || AUDIO_TRACKS.id;
+
+      // Determine if audio should play:
+      // 1. Explicitly requested via forcePlay (e.g. user clicked switcher flag)
+      // 2. Audio was already playing
+      // 3. The invitation cover has already been opened
+      const isCoverOpened = $('#cover-screen').hasClass('opened');
+      const shouldPlay = forcePlay || isPlaying || isCoverOpened;
+
+      // Check if current source already matches target language
+      const currentSrc = audio.currentSrc || audio.src || '';
+      const isCurrentJp = currentSrc.includes('wedding_bgm_jp.mp3');
+      const isTargetJp = (targetLang === 'jp');
+
+      if (isCurrentJp === isTargetJp && currentSrc !== '') {
+        if (shouldPlay && audio.paused) {
+          playAudio();
+        }
+        return;
+      }
+
+      if (audioSwitchTimer) {
+        clearTimeout(audioSwitchTimer);
+        audioSwitchTimer = null;
+      }
+
+      try {
+        audio.pause();
+      } catch(e) {}
+
+      const $source = $('#wedding-audio-source');
+      if ($source.length) {
+        $source.attr('src', targetSrc);
+      }
+      audio.src = targetSrc;
+      audio.currentTime = 0;
+      audio.load();
+
+      if (shouldPlay) {
+        let hasTriggered = false;
+        const triggerPlay = function() {
+          if (hasTriggered) return;
+          hasTriggered = true;
+          audio.removeEventListener('canplay', triggerPlay);
+          playAudio();
+        };
+
+        audio.addEventListener('canplay', triggerPlay, { once: true });
+
+        // Fallback timer in case canplay has already fired from browser cache
+        audioSwitchTimer = setTimeout(() => {
+          triggerPlay();
+        }, 100);
+      }
+    }
+
+    window.updateWeddingAudioTrack = updateAudioTrack;
+
+    window.addEventListener('wedding:langchange', function(e) {
+      if (e.detail && e.detail.lang) {
+        updateAudioTrack(e.detail.lang, e.detail.forcePlay || false);
+      }
+    });
+
+    // Check initial language to sync audio track
+    const initialLang = (window.FaweddingI18n && window.FaweddingI18n.currentLang) || 'id';
+    updateAudioTrack(initialLang, false);
+
     function playAudio() {
       if (audio) {
         audio.play().then(() => {

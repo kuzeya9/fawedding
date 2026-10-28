@@ -330,7 +330,7 @@
       return (TRANSLATIONS[l] && TRANSLATIONS[l][key]) || (TRANSLATIONS.id && TRANSLATIONS.id[key]) || key;
     },
 
-    setLanguage: function(lang, updateUrl = true) {
+    setLanguage: function(lang, updateUrl = true, forcePlay = false) {
       if (lang !== 'id' && lang !== 'jp') lang = 'id';
       this.currentLang = lang;
       
@@ -413,6 +413,9 @@
         }
         window.history.replaceState(null, '', url.toString());
       }
+
+      // Dispatch event to switch Audio Track to match selected language (ID or JP)
+      window.dispatchEvent(new CustomEvent('wedding:langchange', { detail: { lang, forcePlay } }));
     },
 
     getShareUrl: function(targetLang) {
@@ -470,7 +473,7 @@
         e.preventDefault();
         const selectedLang = $(this).data('lang');
         if (selectedLang !== self.currentLang) {
-          self.setLanguage(selectedLang, true);
+          self.setLanguage(selectedLang, true, true);
           if (window.iziToast) {
             iziToast.info({
               title: selectedLang === 'jp' ? '言語切り替え' : 'Bahasa Diubah',
